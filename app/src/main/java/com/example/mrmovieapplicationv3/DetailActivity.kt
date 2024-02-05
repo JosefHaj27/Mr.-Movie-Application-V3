@@ -2,8 +2,6 @@ package com.example.mrmovieapplicationv3
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
 

@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
 
 class MyAdapter(
-    val context: Context,
-    val movieItems: List<MovieData>
+    private val context: Context,
+    private val movieItems: List<MovieData>
 ): RecyclerView.Adapter<MyAdapter.MyViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder
@@ -25,6 +25,7 @@ class MyAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int)
     {
+        // not correct!
         val currentItem = movieItems[position]
         holder.apply {
             nameTV.text = currentItem.movieName
@@ -51,6 +52,7 @@ class MyAdapter(
 
     inner class MyViewHolder(binding: OneRowLayoutBinding): RecyclerView.ViewHolder(binding.root)
     {
+        // not correct!
         val posterImage = binding.moviePosterId
         val nameTV = binding.movieNameId
         val genreTV = binding.movieGenreDataDetailActId

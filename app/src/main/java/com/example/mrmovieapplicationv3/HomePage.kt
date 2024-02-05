@@ -13,9 +13,10 @@ class HomePage : Fragment()
 {
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?)
+    override fun onDestroyView()
     {
-        super.onCreate(savedInstanceState)
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onCreateView(
