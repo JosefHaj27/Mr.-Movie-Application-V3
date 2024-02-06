@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/one_row_layout_id"
-    >
+    android:id="@+id/one_row_layout_id">
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/top_card_view_id"
@@ -78,7 +78,7 @@
                 app:layout_constraintTop_toTopOf="@+id/movie_rating_data_id" />
 
             <TextView
-                android:id="@+id/movie_genre_data_detail_act_id"
+                android:id="@+id/movie_genre_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

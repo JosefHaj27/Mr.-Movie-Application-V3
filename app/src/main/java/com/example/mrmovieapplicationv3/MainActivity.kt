@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        addFragment(HomePage())
+        addFragment(HomePageFragment())
         itemSelectedListener()
     }
 
@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity()
         binding.bottomNavViewId.setOnItemSelectedListener {
             when(it.itemId)
             {
-                bindingItemId(0) -> replaceFragment(HomePage())
-                bindingItemId(2) -> replaceFragment(BookmarkPage())
+                bindingItemId(0) -> replaceFragment(HomePageFragment())
+                bindingItemId(2) -> replaceFragment(BookmarkPageFragment())
                 else -> println("Nothing selected")
             }
             true

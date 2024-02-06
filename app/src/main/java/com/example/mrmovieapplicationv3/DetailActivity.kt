@@ -25,7 +25,7 @@ class DetailActivity : AppCompatActivity()
         binding.lengthDataId.text = intent.getStringExtra("m_len")
         binding.descDataId.text = intent.getStringExtra("m_des")
         binding.movieRatingDataId.text = intent.getStringExtra("m_rating")
-        binding.movieGenreDataDetailActId.text = intent.getStringExtra("m_genre")
+        binding.movieGenreId.text = intent.getStringExtra("m_genre")
 
         binding.descDataId.movementMethod = ScrollingMovementMethod()
     }

@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toTopOf="@+id/star_image_id" />
 
             <TextView
-                android:id="@+id/movie_genre_data_detail_act_id"
+                android:id="@+id/movie_genre_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -104,8 +104,8 @@
                 android:text="Length"
                 android:textSize="15dp"
                 android:layout_marginTop="25dp"
-                app:layout_constraintStart_toStartOf="@+id/movie_genre_data_detail_act_id"
-                app:layout_constraintTop_toBottomOf="@+id/movie_genre_data_detail_act_id" />
+                app:layout_constraintStart_toStartOf="@+id/movie_genre_id"
+                app:layout_constraintTop_toBottomOf="@+id/movie_genre_id" />
 
             <TextView
                 android:id="@+id/length_data_id"

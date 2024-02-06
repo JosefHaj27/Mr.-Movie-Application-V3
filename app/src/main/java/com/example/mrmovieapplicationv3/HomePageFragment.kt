@@ -7,17 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mrmovieapplicationv3.databinding.FragmentHomePageBinding
-import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
 
-class HomePage : Fragment()
+class HomePageFragment : Fragment()
 {
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
-    override fun onDestroyView()
-    {
-        super.onDestroyView()
-        _binding = null
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,10 +19,16 @@ class HomePage : Fragment()
     ): View? {
         _binding = FragmentHomePageBinding.inflate(inflater, container, false)
 
-        binding.recycleViewId.adapter = MyAdapter(requireContext(), initializeAllLists())
+        binding.recycleViewId.adapter = MovieAdapter(requireContext(), initializeAllLists())
         binding.recycleViewId.layoutManager = LinearLayoutManager(requireContext())
 
         return binding.root
+    }
+
+    override fun onDestroyView()
+    {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun allImages(): List<Int>

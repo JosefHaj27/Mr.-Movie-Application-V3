@@ -7,16 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.mrmovieapplicationv3.databinding.FragmentBookmarkPageBinding
 
-class BookmarkPage : Fragment()
+class BookmarkPageFragment : Fragment()
 {
     private var _binding: FragmentBookmarkPageBinding? = null
     private val binding get() = _binding!!
-
-    override fun onDestroyView()
-    {
-        super.onDestroyView()
-        _binding = null
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,4 +19,12 @@ class BookmarkPage : Fragment()
         _binding = FragmentBookmarkPageBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onDestroyView()
+    {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
 }
