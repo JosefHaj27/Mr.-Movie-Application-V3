@@ -21,7 +21,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     {
         _binding = FragmentBookmarkPageBinding.inflate(inflater, container, false)
 
-        binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), HomePageFragment.initializeAllLists(requireContext()), this)
+        binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), Movie.initializeAllLists(requireContext()), this)
         binding.recycleViewBookmarkId.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
     }
@@ -32,7 +32,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         _binding = null
     }
 
-    override fun onMovieItemClick(movie: MovieData)
+    override fun onMovieItemClick(movie: Movie)
     {
         val myIntent = Intent(requireContext(), DetailActivity::class.java).apply {
             putExtra("m_name", movie.movieName)

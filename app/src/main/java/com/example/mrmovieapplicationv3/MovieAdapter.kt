@@ -8,7 +8,7 @@ import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
 
 class MovieAdapter(
     private val context: Context,
-    private val movieItems: List<MovieData>,
+    private val movieItems: List<Movie>,
     private val listener: OnMovieItemClickListener?
 ): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>()
 {
@@ -38,25 +38,24 @@ class MovieAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     val movie = movieItems[position]
                     listener?.onMovieItemClick(movie)
-//                    OnMovieItemClickListener.onMovieItemClick(movie)
                 }
             }
         }
 
-            fun bind(movie: MovieData)
-            {
-                binding.apply {
-                    movieNameId.text = movie.movieName
-                    movieLengthId.text = movie.movieLength
-                    moviePosterId.setImageResource(movie.moviePoster)
-                    movieRatingDataId.text = movie.movieRating
-                    movieGenreId.text = movie.movieGenre
-                }
+        fun bind(movie: Movie)
+        {
+            binding.apply {
+                movieNameId.text = movie.movieName
+                movieLengthId.text = movie.movieLength
+                moviePosterId.setImageResource(movie.moviePoster)
+                movieRatingDataId.text = movie.movieRating
+                movieGenreId.text = movie.movieGenre
             }
+        }
     }
 
     interface OnMovieItemClickListener
     {
-            fun onMovieItemClick(movie: MovieData){}
+        fun onMovieItemClick(movie: Movie)
     }
 }
