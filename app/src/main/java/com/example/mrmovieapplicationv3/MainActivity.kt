@@ -17,13 +17,13 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//  TODO::  move this to initialize method:: DONE
+
         initializing()
     }
 
     private fun initializing()
     {
-        addFragment(homePageFragment)
+        addFragment(homePageFragment, "home_page_fragment_tag")
         itemSelectedListener()
     }
 
@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity()
             when(it.itemId)
             {
                 //  TODO:: fix this:: DONE
-                bindingItemId(0) -> replaceFragment(homePageFragment)
-                bindingItemId(2) -> replaceFragment(bookmarkPageFragment)
+                bindingItemId(0) -> handlingFragmentsAddOrReplace(homePageFragment, "home_page_fragment_tag")
+                bindingItemId(2) -> handlingFragmentsAddOrReplace(bookmarkPageFragment, "bookmark_page_fragment_tag")
                 else -> println("Nothing selected")
             }
             true
@@ -44,24 +44,47 @@ class MainActivity : AppCompatActivity()
     private fun bindingItemId(index: Int): Int = binding.bottomNavViewId.menu.getItem(index).itemId
 
     // TODO:: check replace by tag:: Still!
-    private fun replaceFragment(fragment: Fragment)
+    private fun replaceFragment(fragment: Fragment, fragTag: String)
     {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(binding.frameLayoutId.id, fragment)
+        fragmentTransaction.replace(binding.frameLayoutId.id, fragment, fragTag)
         fragmentTransaction.commit()
     }
 
-    private fun addFragment(fragment: Fragment)
+    private fun addFragment(fragment: Fragment, fragTag: String)
     {
-//        fragment.arguments
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-//        fragmentManager.findFragmentByTag("ff")
-//        fragmentManager.fragments
-//        fragmentTransaction.addToBackStack(null) // optional name for this back stack state, or null.
-
-        fragmentTransaction.add(binding.frameLayoutId.id, fragment)
+        fragmentTransaction.add(binding.frameLayoutId.id, fragment, fragTag)
         fragmentTransaction.commit()
     }
+
+    private fun handlingFragmentsAddOrReplace(fragment: Fragment, fragTag: String)
+    {
+        val fragmentManager = supportFragmentManager
+        val allFragments = fragmentManager.fragments
+        var fragmentExists = false
+
+        println("all fragments are $allFragments")
+        if (!fragmentExists)
+        {
+            for (frag in allFragments)
+            {
+                if (frag.tag == fragment.tag)
+                {
+                    fragmentExists = true
+                    replaceFragment(fragment, fragTag)
+                    println("the current fragment is $frag")
+                    println("all fragments are (inside if statment) $allFragments")
+                    return
+                }
+            }
+            addFragment(fragment, fragTag)
+        }
+    }
+
+
+
+
 }
