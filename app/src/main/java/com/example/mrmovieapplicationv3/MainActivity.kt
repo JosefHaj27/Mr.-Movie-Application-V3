@@ -54,8 +54,13 @@ class MainActivity : AppCompatActivity()
 
     private fun addFragment(fragment: Fragment)
     {
+//        fragment.arguments
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
+//        fragmentManager.findFragmentByTag("ff")
+//        fragmentManager.fragments
+//        fragmentTransaction.addToBackStack(null) // optional name for this back stack state, or null.
+
         fragmentTransaction.add(binding.frameLayoutId.id, fragment)
         fragmentTransaction.commit()
     }
