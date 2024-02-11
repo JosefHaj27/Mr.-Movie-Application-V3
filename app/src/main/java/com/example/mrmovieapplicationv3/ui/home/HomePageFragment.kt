@@ -1,4 +1,4 @@
-package com.example.mrmovieapplicationv3
+package com.example.mrmovieapplicationv3.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mrmovieapplicationv3.ui.details.DetailActivity
 import com.example.mrmovieapplicationv3.databinding.FragmentHomePageBinding
+import com.example.mrmovieapplicationv3.model.movie.Movie
+import com.example.mrmovieapplicationv3.ui.common.MovieAdapter
 
 class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
 {
@@ -17,13 +20,18 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomePageBinding.inflate(inflater, container, false)
+// TODO:: move to initializing:: DONE
 
+        initializing()
+        return binding.root
+    }
+
+    private fun initializing()
+    {
         binding.recycleViewId.adapter = MovieAdapter(requireContext(), Movie.initializeAllLists(requireContext()), this)
         binding.recycleViewId.layoutManager = LinearLayoutManager(requireContext())
-
-        return binding.root
     }
 
     override fun onDestroyView()

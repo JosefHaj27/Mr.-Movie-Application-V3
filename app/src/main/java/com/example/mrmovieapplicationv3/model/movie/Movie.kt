@@ -1,6 +1,7 @@
-package com.example.mrmovieapplicationv3
+package com.example.mrmovieapplicationv3.model.movie
 
 import android.content.Context
+import com.example.mrmovieapplicationv3.R
 
 data class Movie (
     val movieName: String,

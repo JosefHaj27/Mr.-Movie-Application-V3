@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailActivity"
+    tools:context=".ui.details.DetailActivity"
     >
-
+<!-- TODO:: use tools instead of android for texts:: DONE-->
+    <!-- TODO:: use sp instead of dp for texts size:: DONE -->
     <ImageView
         android:id="@+id/background_image_id"
         android:layout_width="wrap_content"
@@ -15,7 +16,8 @@
         android:src="@drawable/the_godfather"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <ImageView
         android:id="@+id/back_button_image_id"
@@ -33,7 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_marginTop="300dp"
-        app:cardBackgroundColor="@color/myColor"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,12 +52,13 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="5dp"
-                android:text="movie name here"
+                tools:text="movie name here"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/save_image_id"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <ImageView
                 android:id="@+id/save_image_id"
@@ -65,7 +67,8 @@
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/bookmark"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/movie_name_detail_act_id" />
+                app:layout_constraintTop_toTopOf="@+id/movie_name_detail_act_id"
+                />
 
             <ImageView
                 android:id="@+id/star_image_id"
@@ -74,45 +77,74 @@
                 android:layout_marginTop="15dp"
                 android:src="@drawable/star"
                 app:layout_constraintStart_toStartOf="@+id/movie_name_detail_act_id"
-                app:layout_constraintTop_toBottomOf="@+id/movie_name_detail_act_id" />
+                app:layout_constraintTop_toBottomOf="@+id/movie_name_detail_act_id"
+                />
 
             <TextView
                 android:id="@+id/movie_rating_data_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5/10"
-                android:textSize="13dp"
+                tools:text="5"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 app:layout_constraintStart_toEndOf="@+id/star_image_id"
-                app:layout_constraintTop_toTopOf="@+id/star_image_id" />
+                app:layout_constraintTop_toTopOf="@+id/star_image_id"
+                />
+            <TextView
+                android:id="@+id/movie_rating_slash_ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/10"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/movie_rating_data_id"
+                app:layout_constraintTop_toTopOf="@+id/movie_rating_data_id"
+                android:layout_marginStart="1dp"
+                />
+
+            <ImageView
+                android:id="@+id/genre_background_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shapes"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="@+id/star_image_id"
+                app:layout_constraintTop_toBottomOf="@+id/star_image_id"
+                />
 
             <TextView
                 android:id="@+id/movie_genre_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Action"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="@+id/star_image_id"
-                app:layout_constraintTop_toBottomOf="@+id/star_image_id" />
+                tools:text="Action"
+                android:textSize="20sp"
+                android:textColor="@color/genre_text_color"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/genre_background_id"
+                app:layout_constraintTop_toTopOf="@+id/genre_background_id"
+                android:paddingStart="11dp"
+                android:paddingTop="11dp"
+                />
 
             <TextView
                 android:id="@+id/length_label_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Length"
-                android:textSize="15dp"
+                android:text="@string/length_label"
+                android:textSize="15sp"
                 android:layout_marginTop="25dp"
                 app:layout_constraintStart_toStartOf="@+id/movie_genre_id"
-                app:layout_constraintTop_toBottomOf="@+id/movie_genre_id" />
+                app:layout_constraintTop_toBottomOf="@+id/movie_genre_id"
+                />
 
             <TextView
                 android:id="@+id/length_data_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1h 50m"
-                android:textSize="15dp"
+                tools:text="1h 50m"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/length_label_id"
                 app:layout_constraintTop_toBottomOf="@+id/length_label_id"
@@ -122,8 +154,8 @@
                 android:id="@+id/language_label_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Language"
-                android:textSize="15dp"
+                android:text="@string/language_label"
+                android:textSize="15sp"
                 android:layout_marginStart="50dp"
                 app:layout_constraintStart_toEndOf="@+id/length_label_id"
                 app:layout_constraintTop_toTopOf="@+id/length_label_id"
@@ -134,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="English"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/language_label_id"
                 app:layout_constraintTop_toBottomOf="@+id/language_label_id"
@@ -144,12 +176,13 @@
                 android:id="@+id/movie_description_label_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="25dp"
+                android:text="@string/description_label"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/length_label_id"
                 app:layout_constraintTop_toBottomOf="@+id/length_label_id"
-                android:layout_marginTop="40dp" />
+                android:layout_marginTop="40dp"
+                />
 
             <TextView
                 android:id="@+id/desc_data_id"
@@ -161,11 +194,12 @@
                 android:ellipsize="end"
                 android:maxLines="9"
                 android:fadeScrollbars="false"
-                android:text="The descr. is here"
-                android:textSize="15dp"
+                tools:text="The descr. is here"
+                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/movie_description_label_id"
-                app:layout_constraintTop_toBottomOf="@+id/movie_description_label_id" />
+                app:layout_constraintTop_toBottomOf="@+id/movie_description_label_id"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

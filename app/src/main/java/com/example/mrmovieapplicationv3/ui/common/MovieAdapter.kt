@@ -1,10 +1,11 @@
-package com.example.mrmovieapplicationv3
+package com.example.mrmovieapplicationv3.ui.common
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
+import com.example.mrmovieapplicationv3.model.movie.Movie
 
 class MovieAdapter(
     private val context: Context,
@@ -12,11 +13,10 @@ class MovieAdapter(
     private val listener: OnMovieItemClickListener?
 ): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>()
 {
-    private lateinit var binding: OneRowLayoutBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder
     {
         val inflater = LayoutInflater.from(context)
-        binding = OneRowLayoutBinding.inflate(inflater, parent, false)
+        val binding = OneRowLayoutBinding.inflate(inflater, parent, false)
         return MovieViewHolder(binding)
     }
 
@@ -30,10 +30,10 @@ class MovieAdapter(
         holder.bind(movieItems[position])
     }
 
-    inner class MovieViewHolder(itemView: OneRowLayoutBinding): RecyclerView.ViewHolder(itemView.root)
+    inner class MovieViewHolder(private val binding: OneRowLayoutBinding): RecyclerView.ViewHolder(binding.root)
     {
         init {
-            itemView.topCardViewId.setOnClickListener {
+            binding.topCardViewId.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val movie = movieItems[position]

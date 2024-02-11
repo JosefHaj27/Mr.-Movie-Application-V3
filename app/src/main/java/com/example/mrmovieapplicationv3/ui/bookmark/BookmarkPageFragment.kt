@@ -1,4 +1,4 @@
-package com.example.mrmovieapplicationv3
+package com.example.mrmovieapplicationv3.ui.bookmark
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mrmovieapplicationv3.ui.details.DetailActivity
+import com.example.mrmovieapplicationv3.ui.common.MovieAdapter
 import com.example.mrmovieapplicationv3.databinding.FragmentBookmarkPageBinding
+import com.example.mrmovieapplicationv3.model.movie.Movie
 
 class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
 {
@@ -17,13 +20,17 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
+    ): View
     {
         _binding = FragmentBookmarkPageBinding.inflate(inflater, container, false)
-
+//TODO:: move to initialize method:: DONE
+        initializing()
+        return binding.root
+    }
+    private fun initializing()
+    {
         binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), Movie.initializeAllLists(requireContext()), this)
         binding.recycleViewBookmarkId.layoutManager = LinearLayoutManager(requireContext())
-        return binding.root
     }
 
     override fun onDestroyView()
