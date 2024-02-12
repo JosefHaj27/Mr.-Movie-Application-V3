@@ -9,7 +9,8 @@ data class Movie (
     val movieRating: String,
     val movieGenre: String,
     val movieLength: String,
-    val moviePoster: Int
+    val moviePoster: Int,
+    var isBookmarked: Boolean // by default its false.
 )
 {
     companion object{
@@ -21,12 +22,14 @@ data class Movie (
             val genre =  context.resources.getStringArray(R.array.movie_genre).toList()
             val length = context.resources.getStringArray(R.array.movie_length).toList()
             val images = allImages()
+            val bookmarkedMovieList = mutableListOf<Boolean>()
 
             val movies = mutableListOf<Movie>()
             for (i in 0..4) // number of movies exists
             {
-                movies.add(Movie(names[i], desc[i], rating[i], genre[i], length[i], images[i]))
+                movies.add(Movie(names[i], desc[i], rating[i], genre[i], length[i], images[i], false))
             }
+            movies[0].isBookmarked = true
             return movies
         }
         private fun allImages(): List<Int> {

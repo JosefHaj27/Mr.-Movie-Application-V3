@@ -23,13 +23,30 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     ): View
     {
         _binding = FragmentBookmarkPageBinding.inflate(inflater, container, false)
-//TODO:: move to initialize method:: DONE
         initializing()
+
+        val argValue = arguments?.getBoolean("bookmarked")
+        val argValue2 = arguments?.getString("test")
+        println("arguments value received $argValue")
+        println("arguments value received $argValue2")
+        
+
         return binding.root
     }
     private fun initializing()
     {
-        binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), Movie.initializeAllLists(requireContext()), this)
+        val bookmarkedMovies = mutableListOf<Movie>()
+        for (movie in Movie.initializeAllLists(requireContext()))
+        {
+            if (movie.isBookmarked)
+            {
+                bookmarkedMovies.add(movie)
+            }
+        }
+
+
+
+        binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), bookmarkedMovies, this)
         binding.recycleViewBookmarkId.layoutManager = LinearLayoutManager(requireContext())
     }
 

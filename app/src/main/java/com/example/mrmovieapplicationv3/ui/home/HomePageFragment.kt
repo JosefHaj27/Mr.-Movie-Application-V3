@@ -22,8 +22,6 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomePageBinding.inflate(inflater, container, false)
-// TODO:: move to initializing:: DONE
-
         initializing()
         return binding.root
     }

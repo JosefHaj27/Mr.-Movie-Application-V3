@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity()
         val allFragments = fragmentManager.fragments
         var fragmentExists = fragmentManager.findFragmentByTag(fragTag)
 
-        println("all fragments are $allFragments")
+//        println("all fragments are $allFragments")
 
         if (fragmentExists == null)
         {
@@ -89,5 +89,4 @@ class MainActivity : AppCompatActivity()
             replaceFragment(fragment, fragTag)
         }
     }
-
 }
