@@ -84,13 +84,9 @@ class MainActivity : AppCompatActivity()
         {
             addFragment(fragment, fragTag)
         }
-        else if(fragmentExists != null)
-        {
-            replaceFragment(fragment, fragTag)
-        }
         else
         {
-            println("non of the if statement is activated ")
+            replaceFragment(fragment, fragTag)
         }
     }
 
