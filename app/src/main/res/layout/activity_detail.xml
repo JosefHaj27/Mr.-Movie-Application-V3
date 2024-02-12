@@ -104,28 +104,18 @@
                 android:layout_marginStart="1dp"
                 />
 
-            <ImageView
-                android:id="@+id/genre_background_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/shapes"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@+id/star_image_id"
-                app:layout_constraintTop_toBottomOf="@+id/star_image_id"
-                />
-
             <TextView
                 android:id="@+id/movie_genre_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 tools:text="Action"
-                android:textSize="20sp"
+                android:textSize="19sp"
                 android:textColor="@color/genre_text_color"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/genre_background_id"
-                app:layout_constraintTop_toTopOf="@+id/genre_background_id"
-                android:paddingStart="11dp"
-                android:paddingTop="11dp"
+                android:textAlignment="center"
+                android:background="@drawable/shapes"
+                app:layout_constraintStart_toStartOf="@+id/star_image_id"
+                app:layout_constraintTop_toBottomOf="@+id/star_image_id"
                 />
 
             <TextView

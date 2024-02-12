@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity()
     private lateinit var binding: ActivityMainBinding
     private val homePageFragment = HomePageFragment()
     private val bookmarkPageFragment = BookmarkPageFragment()
+    private val homeFragmentTag = "home_page_fragment_tag"
+    private val bookmarkFragmentTag = "bookmark_page_fragment_tag"
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -23,19 +25,29 @@ class MainActivity : AppCompatActivity()
 
     private fun initializing()
     {
-        addFragment(homePageFragment, "home_page_fragment_tag")
+        addFragment(homePageFragment, homeFragmentTag)
         itemSelectedListener()
     }
 
     private fun itemSelectedListener()
     {
+        var oldItem = bindingItemId(0)
         binding.bottomNavViewId.setOnItemSelectedListener {
-            when(it.itemId)
+            if (it.itemId != oldItem)
             {
-                //  TODO:: fix this:: DONE
-                bindingItemId(0) -> handlingFragmentsAddOrReplace(homePageFragment, "home_page_fragment_tag")
-                bindingItemId(2) -> handlingFragmentsAddOrReplace(bookmarkPageFragment, "bookmark_page_fragment_tag")
-                else -> println("Nothing selected")
+                when(it.itemId)
+                {
+                    //  TODO:: fix this:: DONE
+                    bindingItemId(0) -> {
+                        handlingFragmentsAddOrReplace(homePageFragment, homeFragmentTag)
+                        oldItem = bindingItemId(0)
+                    }
+                    bindingItemId(2) -> {
+                        handlingFragmentsAddOrReplace(bookmarkPageFragment, bookmarkFragmentTag)
+                        oldItem = bindingItemId(2)
+                    }
+                    else -> println("Nothing selected")
+                }
             }
             true
         }
@@ -64,27 +76,22 @@ class MainActivity : AppCompatActivity()
     {
         val fragmentManager = supportFragmentManager
         val allFragments = fragmentManager.fragments
-        var fragmentExists = false
+        var fragmentExists = fragmentManager.findFragmentByTag(fragTag)
 
         println("all fragments are $allFragments")
-        if (!fragmentExists)
+
+        if (fragmentExists == null)
         {
-            for (frag in allFragments)
-            {
-                if (frag.tag == fragment.tag)
-                {
-                    fragmentExists = true
-                    replaceFragment(fragment, fragTag)
-                    println("the current fragment is $frag")
-                    println("all fragments are (inside if statment) $allFragments")
-                    return
-                }
-            }
             addFragment(fragment, fragTag)
         }
+        else if(fragmentExists != null)
+        {
+            replaceFragment(fragment, fragTag)
+        }
+        else
+        {
+            println("non of the if statement is activated ")
+        }
     }
-
-
-
 
 }
