@@ -15,9 +15,7 @@ class MovieSharedPreference
             val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
             val editor: SharedPreferences.Editor = sharePref.edit()
             editor.putBoolean(BOOKMARKED_KEY, true)
-//        val movies = Movie.initializeAllLists(context)
-//        movies[this].isBookmarked = true
-        println("bookmarkThisMovie() method in MovieSharedPreference called")
+            println("bookmarkThisMovie() method in MovieSharedPreference called")
             editor.apply()
         }
 
@@ -34,18 +32,19 @@ class MovieSharedPreference
             val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
             return sharePref.getBoolean(BOOKMARKED_KEY, false)
         }
-    }
 
 
-    fun registerMovieSharedPref(context: Context, listener: SharedPreferences.OnSharedPreferenceChangeListener)
-    {
-        val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
-        sharePref.registerOnSharedPreferenceChangeListener(listener)
+        fun registerMovieSharedPref(context: Context, listener: SharedPreferences.OnSharedPreferenceChangeListener)
+        {
+            val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
+            sharePref.registerOnSharedPreferenceChangeListener(listener)
+        }
+
+        fun unregisterMovieSharedPref(context: Context, listener: SharedPreferences.OnSharedPreferenceChangeListener)
+        {
+            val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
+            sharePref.unregisterOnSharedPreferenceChangeListener(listener)
+        }
     }
 
-    fun unregisterMovieSharedPref(context: Context, listener: SharedPreferences.OnSharedPreferenceChangeListener)
-    {
-        val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
-        sharePref.unregisterOnSharedPreferenceChangeListener(listener)
-    }
 }

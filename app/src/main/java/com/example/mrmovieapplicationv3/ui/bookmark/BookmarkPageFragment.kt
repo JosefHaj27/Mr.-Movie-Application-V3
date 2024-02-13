@@ -29,7 +29,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         val argValue2 = arguments?.getString("test")
         println("arguments value received $argValue")
         println("arguments value received $argValue2")
-        
+
 
         return binding.root
     }
@@ -43,7 +43,6 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
                 bookmarkedMovies.add(movie)
             }
         }
-
 
 
         binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), bookmarkedMovies, this)

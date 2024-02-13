@@ -40,8 +40,6 @@ class DetailActivity : AppCompatActivity()
         binding.saveImageId.setOnClickListener {
             MovieSharedPreference.bookmarkThisMovie(this)
             println("in detail activity : ${MovieSharedPreference.isMovieBookmarked(this)}")
-//            val myIntent = Intent(this, BookmarkPageFragment::class.java)
-//            myIntent.putExtra("bookmarked", MovieSharedPreference.isMovieBookmarked(this))
 
             val myBundle = Bundle()
             myBundle.putBoolean("bookmarked", MovieSharedPreference.isMovieBookmarked(this))
