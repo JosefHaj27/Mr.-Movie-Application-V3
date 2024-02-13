@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity()
             {
                 when(it.itemId)
                 {
-                    //  TODO:: fix this:: DONE
                     bindingItemId(0) -> {
                         handlingFragmentsAddOrReplace(homePageFragment, homeFragmentTag)
                         oldItem = bindingItemId(0)
@@ -55,7 +54,6 @@ class MainActivity : AppCompatActivity()
 
     private fun bindingItemId(index: Int): Int = binding.bottomNavViewId.menu.getItem(index).itemId
 
-    // TODO:: check replace by tag:: Still!
     private fun replaceFragment(fragment: Fragment, fragTag: String)
     {
         val fragmentManager = supportFragmentManager
@@ -77,8 +75,6 @@ class MainActivity : AppCompatActivity()
         val fragmentManager = supportFragmentManager
         val allFragments = fragmentManager.fragments
         var fragmentExists = fragmentManager.findFragmentByTag(fragTag)
-
-//        println("all fragments are $allFragments")
 
         if (fragmentExists == null)
         {

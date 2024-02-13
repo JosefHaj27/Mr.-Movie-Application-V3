@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.mrmovieapplicationv3.R
 
 data class Movie (
+    val movieID: Int,
     val movieName: String,
     val movieDescription: String,
     val movieRating: String,
@@ -25,10 +26,11 @@ data class Movie (
 //            val bookmarkedMovieList = mutableListOf<Boolean>()
 
             val movies = mutableListOf<Movie>()
-            for (i in 0..4) // number of movies exists
+            for (i in 0..4) // number of movies exists is 5.
             {
-                movies.add(Movie(names[i], desc[i], rating[i], genre[i], length[i], images[i], false))
+                movies.add(Movie(i, names[i], desc[i], rating[i], genre[i], length[i], images[i], false))
             }
+//            TODO:: remove this after the implementation goes right.
             movies[0].isBookmarked = true // just for testing
             return movies
         }

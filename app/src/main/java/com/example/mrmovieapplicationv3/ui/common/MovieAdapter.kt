@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
 import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
 import com.example.mrmovieapplicationv3.model.movie.Movie
 
@@ -57,5 +58,6 @@ class MovieAdapter(
     interface OnMovieItemClickListener
     {
         fun onMovieItemClick(movie: Movie)
+        fun onBookmarkedImageClick(movie: Movie)
     }
 }

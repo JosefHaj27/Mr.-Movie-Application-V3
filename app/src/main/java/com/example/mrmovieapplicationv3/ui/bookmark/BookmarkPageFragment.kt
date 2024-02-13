@@ -1,6 +1,7 @@
 package com.example.mrmovieapplicationv3.ui.bookmark
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.example.mrmovieapplicationv3.ui.details.DetailActivity
 import com.example.mrmovieapplicationv3.ui.common.MovieAdapter
 import com.example.mrmovieapplicationv3.databinding.FragmentBookmarkPageBinding
 import com.example.mrmovieapplicationv3.model.movie.Movie
+import utils.MovieSharedPreference
 
 class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
 {
@@ -25,27 +27,11 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         _binding = FragmentBookmarkPageBinding.inflate(inflater, container, false)
         initializing()
 
-        val argValue = arguments?.getBoolean("bookmarked")
-        val argValue2 = arguments?.getString("test")
-        println("arguments value received $argValue")
-        println("arguments value received $argValue2")
-
-
         return binding.root
     }
     private fun initializing()
     {
-        val bookmarkedMovies = mutableListOf<Movie>()
-        for (movie in Movie.initializeAllLists(requireContext()))
-        {
-            if (movie.isBookmarked)
-            {
-                bookmarkedMovies.add(movie)
-            }
-        }
-
-
-        binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), bookmarkedMovies, this)
+        binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), checkBookmarkedMovie(), this)
         binding.recycleViewBookmarkId.layoutManager = LinearLayoutManager(requireContext())
     }
 
@@ -64,7 +50,27 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
             putExtra("m_gen", movie.movieGenre)
             putExtra("m_img", movie.moviePoster)
             putExtra("m_des", movie.movieDescription)
+            putExtra("movie_bookmarked", movie.isBookmarked)
         }
         startActivity(myIntent)
+    }
+
+    override fun onBookmarkedImageClick(movie: Movie)
+    {
+        //val x = MovieSharedPreference.bookmarkThisMovie(requireContext(), movie.movieID)
+    }
+
+    private fun checkBookmarkedMovie(): List<Movie>
+    {
+        val bookmarkedMovies = mutableListOf<Movie>()
+
+        for (movie in Movie.initializeAllLists(requireContext()))
+        {
+            if (movie.isBookmarked)
+            {
+                bookmarkedMovies.add(movie)
+            }
+        }
+        return bookmarkedMovies
     }
 }

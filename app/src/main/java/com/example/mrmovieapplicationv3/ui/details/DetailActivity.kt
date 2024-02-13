@@ -1,14 +1,10 @@
 package com.example.mrmovieapplicationv3.ui.details
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
-import com.example.mrmovieapplicationv3.model.movie.Movie
-import com.example.mrmovieapplicationv3.ui.bookmark.BookmarkPageFragment
-import utils.MovieSharedPreference
+
 
 class DetailActivity : AppCompatActivity()
 {
@@ -35,19 +31,8 @@ class DetailActivity : AppCompatActivity()
             backButtonImageId.setOnClickListener {
                 onBackBtnPressed()
             }
+            // here handle listener in  case movie is bookmarked
         }
-
-        binding.saveImageId.setOnClickListener {
-            MovieSharedPreference.bookmarkThisMovie(this)
-            println("in detail activity : ${MovieSharedPreference.isMovieBookmarked(this)}")
-
-            val myBundle = Bundle()
-            myBundle.putBoolean("bookmarked", MovieSharedPreference.isMovieBookmarked(this))
-            myBundle.putString("test", "testing value hereeeee")
-            val bookmarkPageFragment = BookmarkPageFragment()
-            bookmarkPageFragment.arguments = myBundle
-        }
-
     }
 
     private fun onBackBtnPressed()
