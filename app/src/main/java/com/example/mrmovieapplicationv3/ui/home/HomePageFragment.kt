@@ -76,6 +76,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
             putExtra(GlobalKeys.MOVIE_POSTER, movie.moviePoster)
             putExtra(GlobalKeys.MOVIE_DESCRIPTION, movie.movieDescription)
             putExtra(GlobalKeys.MOVIE_ID, movie.movieID)
+            putExtra(GlobalKeys.MOVIE_BOOKMARKED, movie.isBookmarked)
         }
         startActivity(myIntent)
     }

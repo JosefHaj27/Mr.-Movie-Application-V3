@@ -35,12 +35,10 @@ class MainActivity : AppCompatActivity() {
                         handlingFragmentsAddOrReplace(homePageFragment, homeFragmentTag)
                         oldItem = bindingItemId(0)
                     }
-
                     bindingItemId(2) -> {
                         handlingFragmentsAddOrReplace(bookmarkPageFragment, bookmarkFragmentTag)
                         oldItem = bindingItemId(2)
                     }
-
                     else -> println("Nothing selected")
                 }
             }
@@ -69,9 +67,12 @@ class MainActivity : AppCompatActivity() {
         val allFragments = fragmentManager.fragments
         var fragmentExists = fragmentManager.findFragmentByTag(fragTag)
 
-        if (fragmentExists == null) {
+        if (fragmentExists == null)
+        {
             addFragment(fragment, fragTag)
-        } else {
+        }
+        else
+        {
             replaceFragment(fragment, fragTag)
         }
     }

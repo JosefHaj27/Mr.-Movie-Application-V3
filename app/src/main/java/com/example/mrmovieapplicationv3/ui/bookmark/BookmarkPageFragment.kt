@@ -27,7 +27,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
         return binding.root
     }
 
-    //    TODO:: needs fix in future!
+//  TODO:: needs fix in future!
     override fun onResume() {
         super.onResume()
         initializing()
@@ -53,7 +53,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
             putExtra(GlobalKeys.MOVIE_POSTER, movie.moviePoster)
             putExtra(GlobalKeys.MOVIE_DESCRIPTION, movie.movieDescription)
             putExtra(GlobalKeys.MOVIE_ID, movie.movieID)
-//            putExtra("movie_bookmarked", movie.isBookmarked)
+            putExtra(GlobalKeys.MOVIE_BOOKMARKED, movie.isBookmarked)
         }
         startActivity(myIntent)
     }
@@ -62,8 +62,10 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
         val bookmarkedMovies = mutableListOf<Movie>()
 
         val fromJsonData = MovieSharedPreference.getAllMovies(requireContext())
-        for (movie in fromJsonData) {
-            if (movie.isBookmarked) {
+        for (movie in fromJsonData)
+        {
+            if (movie.isBookmarked)
+            {
                 bookmarkedMovies.add(movie)
             }
         }

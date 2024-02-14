@@ -9,6 +9,6 @@ class GlobalKeys {
         const val MOVIE_GENRE = "m_gen"
         const val MOVIE_LENGTH = "m_len"
         const val MOVIE_POSTER = "m_poster"
-      //  const val MOVIE_BOOKMARKED = "m_bookmarked"
+        const val MOVIE_BOOKMARKED = "m_bookmarked"
     }
 }

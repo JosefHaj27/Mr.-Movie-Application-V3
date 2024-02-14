@@ -47,6 +47,8 @@ class MovieSharedPreference {
             return movies[movieID].isBookmarked
         }
 
+//        TODO:: I need these two method. But I don't know yet when nad how.
+//              Do I need the listener, if so for what!?
         fun registerMovieSharedPref(
             context: Context,
             listener: SharedPreferences.OnSharedPreferenceChangeListener
