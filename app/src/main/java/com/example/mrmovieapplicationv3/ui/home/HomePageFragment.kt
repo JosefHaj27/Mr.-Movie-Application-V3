@@ -14,7 +14,10 @@ import com.example.mrmovieapplicationv3.databinding.FragmentHomePageBinding
 import com.example.mrmovieapplicationv3.model.movie.Movie
 import com.example.mrmovieapplicationv3.ui.common.MovieAdapter
 import com.google.gson.Gson
+import com.google.gson.JsonArray
 import com.google.gson.reflect.TypeToken
+import org.json.JSONArray
+import org.json.JSONObject
 import utils.MovieSharedPreference
 import java.lang.reflect.Type
 
@@ -43,34 +46,27 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         val sharePref = requireContext().getSharedPreferences(MovieSharedPreference.SHARE_PREF, Context.MODE_PRIVATE)
         var moviesData: String? = sharePref.getString("all_movies", null)
         val gson = Gson()
-        var myData: String?
-
-        println("first of the class data: $moviesData")
+//        println("first of the class data: $moviesData")
 
         if (moviesData == null)
         {
             val editor: SharedPreferences.Editor = sharePref.edit()
-
-            myData = gson.toJson(Movie.initializeAllLists(requireContext()))
+            val myData = gson.toJson(Movie.initializeAllLists(requireContext()))
             editor.putString("all_movies", myData)
             editor.apply()
+//            println("in the if statement: $myData")
 
-            println("in the if statement: $myData")
-
-            /*
-             Movie.initializeAllLists(requireContext()) returned in case the data not yet have been written to the share pref.
-             To give it time to been written then we can access it. Is this RIGHT!?
-             */
             return Movie.initializeAllLists(requireContext())
         }
         else
         {
             val type: Type = object : TypeToken<List<Movie?>?>() {}.type
-            val newData = gson.fromJson<Any>(moviesData, type)
+            val movieDataFromJson = gson.fromJson<List<Movie>>(moviesData, type)
+//             val movieDataFromJson: List<Movie> = gson.fromJson(moviesData, type)
+//            both works the same.
+//            println("in else, $newData")
 
-//            TODO:: Here is the problem.
-            println("in the else statement $newData")
-            return mutableListOf<Movie>()
+            return movieDataFromJson
         }
     }
 
