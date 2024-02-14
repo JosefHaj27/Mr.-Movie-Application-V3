@@ -23,15 +23,13 @@ data class Movie (
             val genre =  context.resources.getStringArray(R.array.movie_genre).toList()
             val length = context.resources.getStringArray(R.array.movie_length).toList()
             val images = allImages()
-//            val bookmarkedMovieList = mutableListOf<Boolean>()
 
             val movies = mutableListOf<Movie>()
             for (i in 0..4) // number of movies exists is 5.
             {
                 movies.add(Movie(i, names[i], desc[i], rating[i], genre[i], length[i], images[i], false))
             }
-//            TODO:: remove this after the implementation goes right.
-            movies[0].isBookmarked = true // just for testing
+
             return movies
         }
         private fun allImages(): List<Int> {

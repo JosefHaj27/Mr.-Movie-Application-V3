@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
 import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
 import com.example.mrmovieapplicationv3.model.movie.Movie
 
@@ -12,27 +11,23 @@ class MovieAdapter(
     private val context: Context,
     private val movieItems: List<Movie>,
     private val listener: OnMovieItemClickListener?
-): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>()
-{
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder
-    {
+) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(context)
         val binding = OneRowLayoutBinding.inflate(inflater, parent, false)
         return MovieViewHolder(binding)
     }
 
-    override fun getItemCount(): Int
-    {
+    override fun getItemCount(): Int {
         return movieItems.size
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int)
-    {
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(movieItems[position])
     }
 
-    inner class MovieViewHolder(private val binding: OneRowLayoutBinding): RecyclerView.ViewHolder(binding.root)
-    {
+    inner class MovieViewHolder(private val binding: OneRowLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         init {
             binding.topCardViewId.setOnClickListener {
                 val position = adapterPosition
@@ -43,8 +38,7 @@ class MovieAdapter(
             }
         }
 
-        fun bind(movie: Movie)
-        {
+        fun bind(movie: Movie) {
             binding.apply {
                 movieNameId.text = movie.movieName
                 movieLengthId.text = movie.movieLength
@@ -55,8 +49,7 @@ class MovieAdapter(
         }
     }
 
-    interface OnMovieItemClickListener
-    {
+    interface OnMovieItemClickListener {
         fun onMovieItemClick(movie: Movie)
     }
 }

@@ -4,18 +4,13 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
-import com.example.mrmovieapplicationv3.model.movie.Movie
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import utils.GlobalKeys
 import utils.MovieSharedPreference
-import java.lang.reflect.Type
 
 
-class DetailActivity : AppCompatActivity()
-{
+class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -23,46 +18,30 @@ class DetailActivity : AppCompatActivity()
         initializing()
     }
 
-    private fun initializing()
-    {
+    private fun initializing() {
+        val id = intent.getIntExtra(GlobalKeys.MOVIE_ID, -1)
         binding.apply {
-            movieNameDetailActId.text = intent.getStringExtra("m_name")
-            backgroundImageId.setImageResource(intent.getIntExtra("m_img", 0))
-            lengthDataId.text = intent.getStringExtra("m_len")
-            descDataId.text = intent.getStringExtra("m_des")
-            movieRatingDataId.text = intent.getStringExtra("m_rating")
-            movieGenreId.text = intent.getStringExtra("m_gen")
+            movieNameDetailActId.text = intent.getStringExtra(GlobalKeys.MOVIE_NAME)
+            backgroundImageId.setImageResource(intent.getIntExtra(GlobalKeys.MOVIE_POSTER, 0))
+            lengthDataId.text = intent.getStringExtra(GlobalKeys.MOVIE_LENGTH)
+            descDataId.text = intent.getStringExtra(GlobalKeys.MOVIE_DESCRIPTION)
+            movieRatingDataId.text = intent.getStringExtra(GlobalKeys.MOVIE_DESCRIPTION)
+            movieGenreId.text = intent.getStringExtra(GlobalKeys.MOVIE_ID)
             descDataId.movementMethod = ScrollingMovementMethod()
             backButtonImageId.setOnClickListener {
                 onBackBtnPressed()
             }
-            // here handle listener in  case movie is bookmarked
             saveImageId.setOnClickListener {
-                val id = intent.getIntExtra("m_ID", -1)
-                val allMovies = MovieSharedPreference.getAllMovies(baseContext)
-//                println("not booked yet ${allMovies[id]}")
-                if(MovieSharedPreference.isMovieBookmarked(baseContext, id))
-                {
-                    println("in if statement ${MovieSharedPreference.isMovieBookmarked(baseContext, id)}")
-                    MovieSharedPreference.unBookmarkThisMovie(baseContext, id)
-                    println("in if statement ${MovieSharedPreference.isMovieBookmarked(baseContext, id)}")
+                if (MovieSharedPreference.isMovieBookmarked(this@DetailActivity, id)) {
+                    MovieSharedPreference.unBookmarkThisMovie(this@DetailActivity, id)
+                } else {
+                    MovieSharedPreference.bookmarkThisMovie(this@DetailActivity, id)
                 }
-                else
-                {
-                    println("in else statement ${MovieSharedPreference.isMovieBookmarked(baseContext, id)}")
-                    MovieSharedPreference.bookmarkThisMovie(baseContext, id)
-                    println("in else statement ${MovieSharedPreference.isMovieBookmarked(baseContext, id)}")
-                }
-//                val allMovies2 = MovieSharedPreference.getAllMovies(baseContext)
-//                println("now booked ${allMovies2[id]}")
             }
-
-
         }
     }
 
-    private fun onBackBtnPressed()
-    {
+    private fun onBackBtnPressed() {
         finish()
     }
 }

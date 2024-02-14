@@ -4,17 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mrmovieapplicationv3.ui.details.DetailActivity
 import com.example.mrmovieapplicationv3.databinding.FragmentHomePageBinding
 import com.example.mrmovieapplicationv3.model.movie.Movie
 import com.example.mrmovieapplicationv3.ui.common.MovieAdapter
+import com.example.mrmovieapplicationv3.ui.details.DetailActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import utils.GlobalKeys
 import utils.MovieSharedPreference
 import java.lang.reflect.Type
 
@@ -43,27 +44,19 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         val sharePref = requireContext().getSharedPreferences(MovieSharedPreference.SHARE_PREF, Context.MODE_PRIVATE)
         var moviesData: String? = sharePref.getString("all_movies", null)
         val gson = Gson()
-//        println("first of the class data: $moviesData")
 
         if (moviesData == null)
         {
             val editor: SharedPreferences.Editor = sharePref.edit()
-            val myData = gson.toJson(Movie.initializeAllLists(requireContext()))
-            editor.putString("all_movies", myData)
+            val moviesDataJson = gson.toJson(Movie.initializeAllLists(requireContext()))
+            editor.putString("all_movies", moviesDataJson)
             editor.apply()
-//            println("in the if statement: $myData")
-
             return Movie.initializeAllLists(requireContext())
         }
         else
         {
             val type: Type = object : TypeToken<List<Movie?>?>() {}.type
-            val movieDataFromJson = gson.fromJson<List<Movie>>(moviesData, type)
-//             val movieDataFromJson: List<Movie> = gson.fromJson(moviesData, type)
-//            both works the same.
-//            println("in else, $newData")
-//            println("else statement in HomePageFragment $movieDataFromJson")
-            return movieDataFromJson
+            return gson.fromJson(moviesData, type)
         }
     }
 
@@ -76,13 +69,13 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     override fun onMovieItemClick(movie: Movie)
     {
         val myIntent = Intent(requireContext(), DetailActivity::class.java).apply {
-            putExtra("m_name", movie.movieName)
-            putExtra("m_rating", movie.movieRating)
-            putExtra("m_len", movie.movieLength)
-            putExtra("m_gen", movie.movieGenre)
-            putExtra("m_img", movie.moviePoster)
-            putExtra("m_des", movie.movieDescription)
-            putExtra("m_ID", movie.movieID)
+            putExtra(GlobalKeys.MOVIE_NAME, movie.movieName)
+            putExtra(GlobalKeys.MOVIE_RATING, movie.movieRating)
+            putExtra(GlobalKeys.MOVIE_LENGTH, movie.movieLength)
+            putExtra(GlobalKeys.MOVIE_GENRE, movie.movieGenre)
+            putExtra(GlobalKeys.MOVIE_POSTER, movie.moviePoster)
+            putExtra(GlobalKeys.MOVIE_DESCRIPTION, movie.movieDescription)
+            putExtra(GlobalKeys.MOVIE_ID, movie.movieID)
         }
         startActivity(myIntent)
     }
