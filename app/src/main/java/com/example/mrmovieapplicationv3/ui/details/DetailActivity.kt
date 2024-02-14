@@ -4,6 +4,11 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
+import com.example.mrmovieapplicationv3.model.movie.Movie
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import utils.MovieSharedPreference
+import java.lang.reflect.Type
 
 
 class DetailActivity : AppCompatActivity()
@@ -32,6 +37,27 @@ class DetailActivity : AppCompatActivity()
                 onBackBtnPressed()
             }
             // here handle listener in  case movie is bookmarked
+            saveImageId.setOnClickListener {
+                val id = intent.getIntExtra("m_ID", -1)
+                val allMovies = MovieSharedPreference.getAllMovies(baseContext)
+//                println("not booked yet ${allMovies[id]}")
+                if(MovieSharedPreference.isMovieBookmarked(baseContext, id))
+                {
+                    println("in if statement ${MovieSharedPreference.isMovieBookmarked(baseContext, id)}")
+                    MovieSharedPreference.unBookmarkThisMovie(baseContext, id)
+                    println("in if statement ${MovieSharedPreference.isMovieBookmarked(baseContext, id)}")
+                }
+                else
+                {
+                    println("in else statement ${MovieSharedPreference.isMovieBookmarked(baseContext, id)}")
+                    MovieSharedPreference.bookmarkThisMovie(baseContext, id)
+                    println("in else statement ${MovieSharedPreference.isMovieBookmarked(baseContext, id)}")
+                }
+//                val allMovies2 = MovieSharedPreference.getAllMovies(baseContext)
+//                println("now booked ${allMovies2[id]}")
+            }
+
+
         }
     }
 

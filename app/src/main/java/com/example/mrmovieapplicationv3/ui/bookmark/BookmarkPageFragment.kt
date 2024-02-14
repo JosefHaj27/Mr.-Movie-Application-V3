@@ -1,7 +1,6 @@
 package com.example.mrmovieapplicationv3.ui.bookmark
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,6 +30,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     }
     private fun initializing()
     {
+//        MovieSharedPreference.unBookmarkAllMovies(requireContext())
         binding.recycleViewBookmarkId.adapter = MovieAdapter(requireContext(), checkBookmarkedMovie(), this)
         binding.recycleViewBookmarkId.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -51,20 +51,17 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
             putExtra("m_img", movie.moviePoster)
             putExtra("m_des", movie.movieDescription)
             putExtra("movie_bookmarked", movie.isBookmarked)
+            putExtra("m_id", movie.movieID)
         }
         startActivity(myIntent)
-    }
-
-    override fun onBookmarkedImageClick(movie: Movie)
-    {
-        //val x = MovieSharedPreference.bookmarkThisMovie(requireContext(), movie.movieID)
     }
 
     private fun checkBookmarkedMovie(): List<Movie>
     {
         val bookmarkedMovies = mutableListOf<Movie>()
 
-        for (movie in Movie.initializeAllLists(requireContext()))
+        val fromJsonData = MovieSharedPreference.getAllMovies(requireContext())
+        for (movie in fromJsonData)
         {
             if (movie.isBookmarked)
             {

@@ -58,6 +58,5 @@ class MovieAdapter(
     interface OnMovieItemClickListener
     {
         fun onMovieItemClick(movie: Movie)
-        fun onBookmarkedImageClick(movie: Movie)
     }
 }

@@ -14,10 +14,7 @@ import com.example.mrmovieapplicationv3.databinding.FragmentHomePageBinding
 import com.example.mrmovieapplicationv3.model.movie.Movie
 import com.example.mrmovieapplicationv3.ui.common.MovieAdapter
 import com.google.gson.Gson
-import com.google.gson.JsonArray
 import com.google.gson.reflect.TypeToken
-import org.json.JSONArray
-import org.json.JSONObject
 import utils.MovieSharedPreference
 import java.lang.reflect.Type
 
@@ -65,7 +62,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
 //             val movieDataFromJson: List<Movie> = gson.fromJson(moviesData, type)
 //            both works the same.
 //            println("in else, $newData")
-
+//            println("else statement in HomePageFragment $movieDataFromJson")
             return movieDataFromJson
         }
     }
@@ -76,7 +73,6 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         _binding = null
     }
 
-
     override fun onMovieItemClick(movie: Movie)
     {
         val myIntent = Intent(requireContext(), DetailActivity::class.java).apply {
@@ -86,11 +82,8 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
             putExtra("m_gen", movie.movieGenre)
             putExtra("m_img", movie.moviePoster)
             putExtra("m_des", movie.movieDescription)
+            putExtra("m_ID", movie.movieID)
         }
         startActivity(myIntent)
-    }
-
-    override fun onBookmarkedImageClick(movie: Movie) {
-        TODO("Not yet implemented")
     }
 }
