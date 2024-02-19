@@ -27,12 +27,13 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
         return binding.root
     }
 
-//  TODO:: needs fix in future!
+//  TODO:: needs fix in future! using BroadcastReceiver
     override fun onResume() {
         super.onResume()
-        initializing()
+        initializing() // TODO:: move to onCreateView() method then implements BroadcastReceiver.
     }
 
+    // receive broadcast to construct the list of movies and send it the adapter.
     private fun initializing() {
         binding.recycleViewBookmarkId.adapter =
             MovieAdapter(requireContext(), checkBookmarkedMovie(), this)
@@ -45,16 +46,8 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     }
 
     override fun onMovieItemClick(movie: Movie) {
-        val myIntent = Intent(requireContext(), DetailActivity::class.java).apply {
-            putExtra(GlobalKeys.MOVIE_NAME, movie.movieName)
-            putExtra(GlobalKeys.MOVIE_RATING, movie.movieRating)
-            putExtra(GlobalKeys.MOVIE_LENGTH, movie.movieLength)
-            putExtra(GlobalKeys.MOVIE_GENRE, movie.movieGenre)
-            putExtra(GlobalKeys.MOVIE_POSTER, movie.moviePoster)
-            putExtra(GlobalKeys.MOVIE_DESCRIPTION, movie.movieDescription)
-            putExtra(GlobalKeys.MOVIE_ID, movie.movieID)
-            putExtra(GlobalKeys.MOVIE_BOOKMARKED, movie.isBookmarked)
-        }
+        val myIntent = Intent(requireContext(), DetailActivity::class.java)
+        myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
         startActivity(myIntent)
     }
 

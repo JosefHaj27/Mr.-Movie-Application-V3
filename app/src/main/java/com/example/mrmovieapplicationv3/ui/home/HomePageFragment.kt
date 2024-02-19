@@ -37,19 +37,20 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     {
         binding.recycleViewId.adapter = MovieAdapter(requireContext(), initializeAllListsUsingGson(), this)
         binding.recycleViewId.layoutManager = LinearLayoutManager(requireContext())
+
     }
 
     private fun initializeAllListsUsingGson(): List<Movie>
     {
         val sharePref = requireContext().getSharedPreferences(MovieSharedPreference.SHARE_PREF, Context.MODE_PRIVATE)
-        var moviesData: String? = sharePref.getString("all_movies", null)
+        var moviesData: String? = sharePref.getString(GlobalKeys.ALL_MOVIES, null)
         val gson = Gson()
 
         if (moviesData == null)
         {
             val editor: SharedPreferences.Editor = sharePref.edit()
             val moviesDataJson = gson.toJson(Movie.initializeAllLists(requireContext()))
-            editor.putString("all_movies", moviesDataJson)
+            editor.putString(GlobalKeys.ALL_MOVIES, moviesDataJson)
             editor.apply()
             return Movie.initializeAllLists(requireContext())
         }
@@ -68,16 +69,17 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
 
     override fun onMovieItemClick(movie: Movie)
     {
-        val myIntent = Intent(requireContext(), DetailActivity::class.java).apply {
-            putExtra(GlobalKeys.MOVIE_NAME, movie.movieName)
-            putExtra(GlobalKeys.MOVIE_RATING, movie.movieRating)
-            putExtra(GlobalKeys.MOVIE_LENGTH, movie.movieLength)
-            putExtra(GlobalKeys.MOVIE_GENRE, movie.movieGenre)
-            putExtra(GlobalKeys.MOVIE_POSTER, movie.moviePoster)
-            putExtra(GlobalKeys.MOVIE_DESCRIPTION, movie.movieDescription)
-            putExtra(GlobalKeys.MOVIE_ID, movie.movieID)
-            putExtra(GlobalKeys.MOVIE_BOOKMARKED, movie.isBookmarked)
-        }
+        val myIntent = Intent(requireContext(), DetailActivity::class.java)
+        myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
+//        broadcastBookmarkedIntent(movie)
         startActivity(myIntent)
+    }
+
+    private fun broadcastBookmarkedIntent(movie: Movie)
+    {
+        val bookmarkedIntent = Intent(requireContext(), DetailActivity::class.java)
+        bookmarkedIntent.action = GlobalKeys.BROADCAST_ACTION
+        bookmarkedIntent.putExtra("movie_data", movie) // send object
+        context?.sendBroadcast(bookmarkedIntent)
     }
 }

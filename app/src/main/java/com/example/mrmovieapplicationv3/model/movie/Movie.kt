@@ -1,6 +1,10 @@
 package com.example.mrmovieapplicationv3.model.movie
 
 import android.content.Context
+import android.os.Build
+import android.os.Parcel
+import android.os.Parcelable
+import androidx.annotation.RequiresApi
 import com.example.mrmovieapplicationv3.R
 
 data class Movie (
@@ -12,9 +16,44 @@ data class Movie (
     val movieLength: String,
     val moviePoster: Int,
     var isBookmarked: Boolean // by default its false.
-)
+): Parcelable
 {
-    companion object{
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(movieID)
+        parcel.writeString(movieName)
+        parcel.writeString(movieDescription)
+        parcel.writeString(movieRating)
+        parcel.writeString(movieGenre)
+        parcel.writeString(movieLength)
+        parcel.writeInt(moviePoster)
+        parcel.writeByte(if (isBookmarked) 1 else 0)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Movie> {
+        override fun createFromParcel(parcel: Parcel): Movie {
+            return Movie(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Movie?> {
+            return arrayOfNulls(size)
+        }
+
         fun initializeAllLists(context: Context): List<Movie>
         {
             val names = context.resources.getStringArray(R.array.movie_names).toList()
@@ -32,6 +71,7 @@ data class Movie (
 
             return movies
         }
+
         private fun allImages(): List<Int> {
             return listOf(
                 R.drawable.avengers,
