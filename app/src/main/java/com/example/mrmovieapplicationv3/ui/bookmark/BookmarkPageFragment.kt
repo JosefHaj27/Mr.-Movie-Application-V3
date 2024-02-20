@@ -1,6 +1,11 @@
 package com.example.mrmovieapplicationv3.ui.bookmark
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +22,38 @@ import utils.MovieSharedPreference
 class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private var _binding: FragmentBookmarkPageBinding? = null
     private val binding get() = _binding!!
+    private val intentFilter = IntentFilter(GlobalKeys.BROADCAST_ACTION)
+    private val movies = mutableListOf<Movie>()
+    private var movieAdapter: MovieAdapter? = null
+
+    private val receiver = object :BroadcastReceiver(){
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val movie: Movie? = if (SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                intent?.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)
+            } else{
+                intent?.getParcelableExtra(GlobalKeys.MOVIE_DATA)
+            }
+            if (movie != null) {
+                if (movie.isBookmarked)
+                {
+                    movies.add(movie)
+                }
+                else{
+                    movies.removeIf {
+                        it.movieID == movie.movieID
+                    }
+                }
+                movieAdapter?.notifyDataSetChanged()
+            }
+            else
+            {
+                println("null movie data")
+            }
+            println("In onReceive method ${movie?.movieName}")
+
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,17 +64,21 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
         return binding.root
     }
 
-//  TODO:: needs fix in future! using BroadcastReceiver
-    override fun onResume() {
-        super.onResume()
-//        initializing() // TODO:: move to onCreateView() method then implements BroadcastReceiver.
+
+    override fun onStart() {
+        super.onStart()
+        context?.registerReceiver(receiver, intentFilter, Context.RECEIVER_EXPORTED)
     }
 
-    // receive broadcast to construct the list of movies and send it the adapter.
+    override fun onDestroy() {
+        super.onDestroy()
+        context?.unregisterReceiver(receiver)
+    }
     private fun initializing() {
-        binding.recycleViewBookmarkId.adapter =
-            MovieAdapter(requireContext(), checkBookmarkedMovie(), this)
+        movieAdapter = MovieAdapter(requireContext(), checkBookmarkedMovie(), this)
+        binding.recycleViewBookmarkId.adapter = movieAdapter
         binding.recycleViewBookmarkId.layoutManager = LinearLayoutManager(requireContext())
+       // receive broadcast to construct the list of movies and send it the adapter.
     }
 
     override fun onDestroyView() {
@@ -52,16 +93,17 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     }
 
     private fun checkBookmarkedMovie(): List<Movie> {
-        val bookmarkedMovies = mutableListOf<Movie>()
 
         val fromJsonData = MovieSharedPreference.getAllMovies(requireContext())
         for (movie in fromJsonData)
         {
             if (movie.isBookmarked)
             {
-                bookmarkedMovies.add(movie)
+                movies.add(movie)
             }
         }
-        return bookmarkedMovies
+
+        println("all movies are $movies")
+        return movies
     }
 }

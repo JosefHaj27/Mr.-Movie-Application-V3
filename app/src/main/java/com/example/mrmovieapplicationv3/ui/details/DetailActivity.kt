@@ -1,6 +1,7 @@
 package com.example.mrmovieapplicationv3.ui.details
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
@@ -22,26 +23,14 @@ class DetailActivity : AppCompatActivity() {
         initializing()
     }
 
-//    TODO:: Not good, needs more works.
-    override fun onResume()
-    {
-        super.onResume()
-        binding.apply {
-            val isMovieBookmarked: Boolean = intent.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)?.isBookmarked == true
-            if (isMovieBookmarked)
-            {
-                saveImageId.setImageResource(R.drawable.home_icon)
-            }
-            else
-            {
-                saveImageId.setImageResource(R.drawable.bookmark)
-            }
-        }
-    }
-
     private fun initializing() {
-        val movie: Movie = intent.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)?: return
-        val id = movie.movieID
+        val movie: Movie? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)
+        } else {
+            intent.getParcelableExtra(GlobalKeys.MOVIE_DATA)
+        }
+
+        val id = movie?.movieID ?: return
 
         binding.apply {
             movieNameDetailActId.text = movie.movieName
@@ -60,16 +49,14 @@ class DetailActivity : AppCompatActivity() {
                 if (MovieSharedPreference.isMovieBookmarked(this@DetailActivity, id))
                 {
                     MovieSharedPreference.unBookmarkThisMovie(this@DetailActivity, id)
-                    saveImageId.setImageResource(R.drawable.bookmark) // not bookmarked icon.
+                    saveImageId.setImageResource(R.drawable.unbookmark)
                 }
                 else
                 {
                     MovieSharedPreference.bookmarkThisMovie(this@DetailActivity, id)
-                    saveImageId.setImageResource(R.drawable.home_icon) // bookmarked icon, its a place just a placeholder.
+                    saveImageId.setImageResource(R.drawable.bookmark)
                 }
-                // send broadcast here
-
-//                broadcastBookmarkedIntent()
+                broadcastBookmarkedIntent(movie)
             }
         }
     }
@@ -83,6 +70,7 @@ class DetailActivity : AppCompatActivity() {
         val bookmarkedIntent = Intent()
         bookmarkedIntent.action = GlobalKeys.BROADCAST_ACTION
         bookmarkedIntent.putExtra(GlobalKeys.MOVIE_DATA, movie) // send object
+        println("Broadcast message has been sent movie booked/unbooked is ${movie.movieName}")
         this@DetailActivity.sendBroadcast(bookmarkedIntent)
     }
 }
