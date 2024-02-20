@@ -10,14 +10,17 @@ import java.lang.reflect.Type
 class MovieSharedPreference {
     companion object {
         const val SHARE_PREF = "com.example.mrmovieapplicationv3.bookmarked_values"
-        private const val MOVIES_KEY = "all_movies"
+        private const val MOVIES_KEY = "all_movies" // when value changes getAllMovies return null. This key have same the value as in GlobleKeys.ALL_MOVIES why?
 
         fun getAllMovies(context: Context): List<Movie> {
             val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
             val movies = sharePref.getString(MOVIES_KEY, null)
             val gson = Gson()
             val type: Type = object : TypeToken<List<Movie?>?>() {}.type
-            return gson.fromJson(movies, type)
+//            println(gson.fromJson(movies, type) as List<Movie>)
+            val m: List<Movie>? = gson.fromJson(movies, type)
+            println(m)
+            return gson.fromJson(movies, type) // return null????
         }
 
         fun bookmarkThisMovie(context: Context, movieID: Int) {

@@ -1,30 +1,28 @@
 package com.example.mrmovieapplicationv3.model.movie
 
 import android.content.Context
-import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.annotation.RequiresApi
 import com.example.mrmovieapplicationv3.R
 
 data class Movie (
     val movieID: Int,
-    val movieName: String,
-    val movieDescription: String,
-    val movieRating: String,
-    val movieGenre: String,
-    val movieLength: String,
+    val movieName: String?,
+    val movieDescription: String?,
+    val movieRating: String?,
+    val movieGenre: String?,
+    val movieLength: String?,
     val moviePoster: Int,
     var isBookmarked: Boolean // by default its false.
 ): Parcelable
 {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readInt(),
         parcel.readByte() != 0.toByte()
     ) {
@@ -68,7 +66,6 @@ data class Movie (
             {
                 movies.add(Movie(i, names[i], desc[i], rating[i], genre[i], length[i], images[i], false))
             }
-
             return movies
         }
 

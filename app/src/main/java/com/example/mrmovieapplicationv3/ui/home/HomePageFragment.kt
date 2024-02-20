@@ -79,7 +79,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     {
         val bookmarkedIntent = Intent(requireContext(), DetailActivity::class.java)
         bookmarkedIntent.action = GlobalKeys.BROADCAST_ACTION
-        bookmarkedIntent.putExtra("movie_data", movie) // send object
+        bookmarkedIntent.putExtra(GlobalKeys.MOVIE_DATA, movie) // send object
         context?.sendBroadcast(bookmarkedIntent)
     }
 }

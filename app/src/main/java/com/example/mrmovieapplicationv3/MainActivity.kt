@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun handlingFragmentsAddOrReplace(fragment: Fragment, fragTag: String) {
         val fragmentManager = supportFragmentManager
-        val allFragments = fragmentManager.fragments
         var fragmentExists = fragmentManager.findFragmentByTag(fragTag)
 
         if (fragmentExists == null)

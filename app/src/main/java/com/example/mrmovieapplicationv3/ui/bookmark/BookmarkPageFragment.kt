@@ -23,14 +23,14 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBookmarkPageBinding.inflate(inflater, container, false)
-
+        initializing()
         return binding.root
     }
 
 //  TODO:: needs fix in future! using BroadcastReceiver
     override fun onResume() {
         super.onResume()
-        initializing() // TODO:: move to onCreateView() method then implements BroadcastReceiver.
+//        initializing() // TODO:: move to onCreateView() method then implements BroadcastReceiver.
     }
 
     // receive broadcast to construct the list of movies and send it the adapter.
