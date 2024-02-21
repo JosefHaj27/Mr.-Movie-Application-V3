@@ -4,15 +4,29 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.example.mrmovieapplicationv3.R
+import com.google.gson.annotations.SerializedName
 
 data class Movie (
     val movieID: Int,
+
+    @SerializedName("name")
     val movieName: String?,
+
+    @SerializedName("summary")
     val movieDescription: String?,
+
+    @SerializedName("rating")
     val movieRating: String?,
+
+    @SerializedName("genres")
     val movieGenre: String?,
+
+    @SerializedName("status") // Wrong, just for testing
     val movieLength: String?,
-    val moviePoster: Int,
+
+    @SerializedName("original")
+    val moviePoster: Int,  // needs to be changed to string because it received it as a string value.
+
     var isBookmarked: Boolean // by default its false.
 ): Parcelable
 {

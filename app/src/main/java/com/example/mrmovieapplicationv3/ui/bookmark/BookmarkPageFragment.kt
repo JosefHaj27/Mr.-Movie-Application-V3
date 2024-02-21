@@ -93,7 +93,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     }
 
     private fun checkBookmarkedMovie(): List<Movie> {
-
+        movies.clear() // To clear movies list so no duplicate appears.
         val fromJsonData = MovieSharedPreference.getAllMovies(requireContext())
         for (movie in fromJsonData)
         {
