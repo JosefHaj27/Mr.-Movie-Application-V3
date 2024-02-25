@@ -26,35 +26,6 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private val movies = mutableListOf<Movie>()
     private var movieAdapter: MovieAdapter? = null
 
-    private val receiver = object :BroadcastReceiver(){
-
-        override fun onReceive(context: Context?, intent: Intent?) {
-//            val movie: Movie? = if (SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-//                intent?.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)
-//            } else{
-//                intent?.getParcelableExtra(GlobalKeys.MOVIE_DATA)
-//            }
-//            if (movie != null) {
-//                if (movie.isBookmarked)
-//                {
-//                    movies.add(movie)
-//                }
-//                else{
-//                    movies.removeIf {
-//                        it.movieID == movie.movieID
-//                    }
-//                }
-//                movieAdapter?.notifyDataSetChanged()
-//            }
-//            else
-//            {
-//                println("null movie data")
-//            }
-//            println("In onReceive method ${movie?.movieName}")
-
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,12 +38,12 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
 
     override fun onStart() {
         super.onStart()
-        context?.registerReceiver(receiver, intentFilter, Context.RECEIVER_EXPORTED)
+//        context?.registerReceiver(receiver, intentFilter, Context.RECEIVER_EXPORTED)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        context?.unregisterReceiver(receiver)
+//        context?.unregisterReceiver(receiver)
     }
     private fun initializing() {
         movieAdapter = MovieAdapter(requireContext(), checkBookmarkedMovie(), this)
@@ -88,7 +59,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
 
     override fun onMovieItemClick(movie: Movie) {
         val myIntent = Intent(requireContext(), DetailActivity::class.java)
-//        myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
+        myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
         startActivity(myIntent)
     }
 

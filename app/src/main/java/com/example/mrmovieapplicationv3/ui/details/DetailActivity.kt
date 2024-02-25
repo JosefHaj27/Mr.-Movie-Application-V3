@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mrmovieapplicationv3.R
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
@@ -24,46 +25,64 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initializing() {
-//        val movie: Movie? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            intent.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)
-//        } else {
-//            intent.getParcelableExtra(GlobalKeys.MOVIE_DATA)
-//        }
-//
-//        val id = movie?.movieID ?: return
-//
-//        binding.apply {
-//            movieNameDetailActId.text = movie.movieName
-//            backgroundImageId.setImageResource(movie.moviePoster)
-//            lengthDataId.text = movie.movieLength
-//            descDataId.apply {
-//                text = movie.movieDescription
-//                movementMethod = ScrollingMovementMethod()
-//            }
-//            movieRatingDataId.text = movie.movieRating
-//            movieGenreId.text = movie.movieGenre
-//            backButtonImageId.setOnClickListener {
-//                onBackBtnPressed()
-//            }
-//            saveImageId.setOnClickListener {
-//                if (MovieSharedPreference.isMovieBookmarked(this@DetailActivity, id))
-//                {
-//                    MovieSharedPreference.unBookmarkThisMovie(this@DetailActivity, id)
-//                    saveImageId.setImageResource(R.drawable.unbookmark)
-//                }
-//                else
-//                {
-//                    MovieSharedPreference.bookmarkThisMovie(this@DetailActivity, id)
-//                    saveImageId.setImageResource(R.drawable.bookmark)
-//                }
-//                broadcastBookmarkedIntent(movie)
-//            }
-//        }
+        val movie: Movie? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)
+        } else {
+            intent.getParcelableExtra(GlobalKeys.MOVIE_DATA)
+        }
+
+        val id = movie?.show?.id ?: return
+
+        binding.apply {
+            movieNameDetailActId.text = movie.show.name
+//            backgroundImageId.setImageResource(movie.show.) // Later using GLIDE
+            lengthDataId.text = movie.show.runtime?.toString()
+            descDataId.apply {
+                text = movie.show.summary
+                movementMethod = ScrollingMovementMethod()
+        // TODO::remove the html elements from the text
+            }
+            movieRatingDataId.text = bindRatingData(movie)
+            movieGenreId.text = bindGenresData(movie) //movie.show.genres.toString()
+            backButtonImageId.setOnClickListener {
+                onBackBtnPressed()
+            }
+        }
     }
 
-//    private fun onBackBtnPressed() {
-//        finish()
-//    }
+    private fun bindRatingData(movie: Movie): String
+    {
+        return if (movie.show.rating?.average != null) {
+            movie.show.rating.average.toString()
+        } else {
+            0.toString()
+        }
+    }
+    private fun bindGenresData(movie: Movie): String
+    {
+        val mGenres = movie.show.genres?.size
+        if (mGenres != null)
+        {
+            if (mGenres != 0)
+            {
+                return movie.show.genres[0]
+            }
+            else{
+                binding.movieGenreId.visibility = View.INVISIBLE
+                return ""
+            }
+        }
+        else
+        {
+            binding.movieGenreId.visibility = View.INVISIBLE
+            return ""
+        }
+        binding.movieGenreId.visibility = View.INVISIBLE
+        return ""
+    }
+    private fun onBackBtnPressed() {
+        finish()
+    }
 
 //    private fun broadcastBookmarkedIntent(movie: Movie)
 //    {

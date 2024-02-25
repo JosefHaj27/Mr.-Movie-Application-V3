@@ -23,7 +23,7 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-//        holder.bind(movieItems[position])
+        holder.bind(movieItems[position])
     }
 
     inner class MovieViewHolder(private val binding: OneRowLayoutBinding) :
@@ -38,15 +38,45 @@ class MovieAdapter(
             }
         }
 
-//        fun bind(movie: Movie) {
-//            binding.apply {
-//                movieNameId.text = movie.movieName
-//                movieLengthId.text = movie.movieLength
-//                moviePosterId.setImageResource(movie.moviePoster)
-//                movieRatingDataId.text = movie.movieRating
-//                movieGenreId.text = movie.movieGenre
-//            }
-//        }
+        fun bind(movie: Movie) {
+            binding.apply {
+                movieNameId.text = movie.show.name
+                movieLengthId.text = movie.show.runtime?.toString()
+                movieRatingDataId.text = bindRatingData(movie)
+                movieGenreId.text = "asdsdsdasd"
+//                moviePosterId.setImageResource(movie.moviePoster) // Using Glide
+                movieGenreId.text = movie.show.genres.toString()
+            }
+        }
+
+        private fun bindRatingData(movie: Movie): String
+        {
+            return if (movie.show.rating?.average != null) {
+                movie.show.rating.average.toString()
+            } else {
+                0.toString()
+            }
+        }
+
+        private fun bindGenresData(movie: Movie): String
+        {
+            val mGenres = movie.show.genres?.size
+            if (mGenres != null)
+            {
+                if (mGenres != 0)
+                {
+                    return movie.show.genres[0]
+                }
+                else{
+                    return " "
+                }
+            }
+            else
+            {
+                return " "
+            }
+            return " "
+        }
     }
 
     interface OnMovieItemClickListener {
