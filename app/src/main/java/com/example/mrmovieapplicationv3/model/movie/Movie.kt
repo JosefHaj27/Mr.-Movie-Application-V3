@@ -7,64 +7,70 @@ import com.example.mrmovieapplicationv3.R
 import com.google.gson.annotations.SerializedName
 
 data class Movie (
-    val movieID: Int,
+// any null value in the API, treated as String value.
+    @SerializedName("score")
+    val score: Double,
 
-    @SerializedName("name")
-    val movieName: String?,
+    @SerializedName("show")
+    val show: Show,
 
-    @SerializedName("summary")
-    val movieDescription: String?,
 
-    @SerializedName("rating")
-    val movieRating: String?,
+//  TODO:: NO need for these, but when they are commented the constructor throws an error.
 
-    @SerializedName("genres")
-    val movieGenre: String?,
-
-    @SerializedName("status") // Wrong, just for testing
-    val movieLength: String?,
-
-    @SerializedName("original")
-    val moviePoster: Int,  // needs to be changed to string because it received it as a string value.
-
-    var isBookmarked: Boolean // by default its false.
-): Parcelable
+//    val movieID: Int,
+//
+//    val movieName: String?,
+//
+//    val movieDescription: String?,
+//
+//    val movieRating: String?,
+//
+//    val movieGenre: String?,
+//
+//    val movieLength: String?,
+//
+//    val moviePoster: Int,
+//
+//    var isBookmarked: Boolean // by default its false. // Removed
+)//: Parcelable
 {
-    constructor(parcel: Parcel) : this(
-        parcel.readInt(),
+    //com.example.mrmovieapplicationv3.model.movie.Movie
+    //com.example.mrmovieapplicationv3.model.movie.Movie
+/*    constructor(parcel: Parcel) : this(
+*//*        parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readInt(),
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte()*//*
     ) {
-    }
+    }*/
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(movieID)
-        parcel.writeString(movieName)
-        parcel.writeString(movieDescription)
-        parcel.writeString(movieRating)
-        parcel.writeString(movieGenre)
-        parcel.writeString(movieLength)
-        parcel.writeInt(moviePoster)
-        parcel.writeByte(if (isBookmarked) 1 else 0)
-    }
+//    override fun writeToParcel(parcel: Parcel, flags: Int) {
+//        parcel.writeInt(movieID)
+//        parcel.writeString(movieName)
+//        parcel.writeString(movieDescription)
+//        parcel.writeString(movieRating)
+//        parcel.writeString(movieGenre)
+//        parcel.writeString(movieLength)
+//        parcel.writeInt(moviePoster)
+//        parcel.writeByte(if (isBookmarked) 1 else 0)
+//    }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+//    override fun describeContents(): Int {
+//        return 0
+//    }
 
-    companion object CREATOR : Parcelable.Creator<Movie> {
-        override fun createFromParcel(parcel: Parcel): Movie {
-            return Movie(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Movie?> {
-            return arrayOfNulls(size)
-        }
+//    companion object CREATOR : Parcelable.Creator<Movie> {
+//        override fun createFromParcel(parcel: Parcel): Movie {
+//            return Movie("")
+//        }
+//
+//        override fun newArray(size: Int): Array<Movie?> {
+//            return arrayOfNulls(size)
+//        }
 
         fun initializeAllLists(context: Context): List<Movie>
         {
@@ -78,7 +84,7 @@ data class Movie (
             val movies = mutableListOf<Movie>()
             for (i in 0..4) // number of movies exists is 5.
             {
-                movies.add(Movie(i, names[i], desc[i], rating[i], genre[i], length[i], images[i], false))
+//                movies.add(Movie(i, names[i], desc[i], rating[i], genre[i], length[i], images[i], false))
             }
             return movies
         }
@@ -92,5 +98,5 @@ data class Movie (
                 R.drawable.the_godfather,
             )
         }
-    }
+//    }
 }

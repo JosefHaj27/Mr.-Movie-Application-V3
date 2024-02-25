@@ -41,7 +41,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
 
     private fun initializing()
     {
-        binding.recycleViewId.adapter = MovieAdapter(requireContext(), initializeAllListsUsingGson(), this)
+        binding.recycleViewId.adapter = MovieAdapter(requireContext(), mutableListOf<Movie>(), this)
         binding.recycleViewId.layoutManager = LinearLayoutManager(requireContext())
         callingAPIForMoviesData()
     }
@@ -51,6 +51,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         val call = ApiClient.apiService.getMovies()
         call.enqueue(object : retrofit2.Callback<List<Movie>> {
             override fun onResponse(call: Call<List<Movie>>, response: Response<List<Movie>>) {
+                Log.d(TAG, "onResponse: ${response.body()}")
                 if(response.isSuccessful)
                 {
                     val moviesBodyData = response.body()
@@ -71,26 +72,26 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         })
     }
 
-    private fun initializeAllListsUsingGson(): List<Movie>
-    {
-        val sharePref = requireContext().getSharedPreferences(MovieSharedPreference.SHARE_PREF, Context.MODE_PRIVATE)
-        var moviesData: String? = sharePref.getString(GlobalKeys.ALL_MOVIES, null)
-        val gson = Gson()
-
-        if (moviesData == null)
-        {
-            val editor: SharedPreferences.Editor = sharePref.edit()
-            val moviesDataJson = gson.toJson(Movie.initializeAllLists(requireContext()))
-            editor.putString(GlobalKeys.ALL_MOVIES, moviesDataJson)
-            editor.apply()
-            return Movie.initializeAllLists(requireContext())
-        }
-        else
-        {
-            val type: Type = object : TypeToken<List<Movie?>?>() {}.type
-            return gson.fromJson(moviesData, type)
-        }
-    }
+//    private fun initializeAllListsUsingGson(): List<Movie>
+//    {
+//        val sharePref = requireContext().getSharedPreferences(MovieSharedPreference.SHARE_PREF, Context.MODE_PRIVATE)
+//        var moviesData: String? = sharePref.getString(GlobalKeys.ALL_MOVIES, null)
+//        val gson = Gson()
+//
+//        if (moviesData == null)
+//        {
+//            val editor: SharedPreferences.Editor = sharePref.edit()
+//            val moviesDataJson = gson.toJson(Movie.initializeAllLists(requireContext()))
+//            editor.putString(GlobalKeys.ALL_MOVIES, moviesDataJson)
+//            editor.apply()
+//            return Movie.initializeAllLists(requireContext())
+//        }
+//        else
+//        {
+//            val type: Type = object : TypeToken<List<Movie?>?>() {}.type
+//            return gson.fromJson(moviesData, type)
+//        }
+//    }
 
     override fun onDestroyView()
     {
@@ -101,7 +102,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
     override fun onMovieItemClick(movie: Movie)
     {
         val myIntent = Intent(requireContext(), DetailActivity::class.java)
-        myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
+//        myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
         startActivity(myIntent)
     }
 

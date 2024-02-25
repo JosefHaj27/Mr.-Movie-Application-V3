@@ -7,6 +7,6 @@ import retrofit2.http.GET
 
 interface ApiService
 {
-    @GET("search/shows?q=movies") // HTTP requests and API endpoint
+    @GET("search/shows?q=movies") // HTTP requests method and API endpoint
     fun getMovies(): Call<List<Movie>>
 }

@@ -27,7 +27,7 @@ class MovieSharedPreference {
             val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
             val movies = getAllMovies(context)
             val editor: SharedPreferences.Editor = sharePref.edit()
-            movies[movieID].isBookmarked = true
+//            movies[movieID].isBookmarked = true
             val gson = Gson()
             val moviesListJson = gson.toJson(movies)
             editor.putString(MOVIES_KEY, moviesListJson)
@@ -38,17 +38,17 @@ class MovieSharedPreference {
             val sharePref = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
             val movies = getAllMovies(context)
             val editor: SharedPreferences.Editor = sharePref.edit()
-            movies[movieID].isBookmarked = false
+//            movies[movieID].isBookmarked = false
             val gson = Gson()
             val moviesListJson = gson.toJson(movies)
             editor.putString(MOVIES_KEY, moviesListJson)
             editor.apply()
         }
 
-        fun isMovieBookmarked(context: Context, movieID: Int): Boolean {
-            val movies = getAllMovies(context)
-            return movies[movieID].isBookmarked
-        }
+//        fun isMovieBookmarked(context: Context, movieID: Int): Boolean {
+//            val movies = getAllMovies(context)
+//            return movies[movieID].isBookmarked
+//        }
 
 //        TODO:: I need these two method. But I don't know yet when nad how.
 //              Do I need the listener, if so for what!?

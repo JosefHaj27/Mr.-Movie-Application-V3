@@ -29,28 +29,28 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private val receiver = object :BroadcastReceiver(){
 
         override fun onReceive(context: Context?, intent: Intent?) {
-            val movie: Movie? = if (SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-                intent?.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)
-            } else{
-                intent?.getParcelableExtra(GlobalKeys.MOVIE_DATA)
-            }
-            if (movie != null) {
-                if (movie.isBookmarked)
-                {
-                    movies.add(movie)
-                }
-                else{
-                    movies.removeIf {
-                        it.movieID == movie.movieID
-                    }
-                }
-                movieAdapter?.notifyDataSetChanged()
-            }
-            else
-            {
-                println("null movie data")
-            }
-            println("In onReceive method ${movie?.movieName}")
+//            val movie: Movie? = if (SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+//                intent?.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)
+//            } else{
+//                intent?.getParcelableExtra(GlobalKeys.MOVIE_DATA)
+//            }
+//            if (movie != null) {
+//                if (movie.isBookmarked)
+//                {
+//                    movies.add(movie)
+//                }
+//                else{
+//                    movies.removeIf {
+//                        it.movieID == movie.movieID
+//                    }
+//                }
+//                movieAdapter?.notifyDataSetChanged()
+//            }
+//            else
+//            {
+//                println("null movie data")
+//            }
+//            println("In onReceive method ${movie?.movieName}")
 
         }
     }
@@ -88,7 +88,7 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
 
     override fun onMovieItemClick(movie: Movie) {
         val myIntent = Intent(requireContext(), DetailActivity::class.java)
-        myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
+//        myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
         startActivity(myIntent)
     }
 
@@ -97,10 +97,10 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
         val fromJsonData = MovieSharedPreference.getAllMovies(requireContext())
         for (movie in fromJsonData)
         {
-            if (movie.isBookmarked)
-            {
-                movies.add(movie)
-            }
+//            if (movie.isBookmarked)
+//            {
+//                movies.add(movie)
+//            }
         }
 
         println("all movies are $movies")

@@ -23,7 +23,7 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(movieItems[position])
+//        holder.bind(movieItems[position])
     }
 
     inner class MovieViewHolder(private val binding: OneRowLayoutBinding) :
@@ -38,15 +38,15 @@ class MovieAdapter(
             }
         }
 
-        fun bind(movie: Movie) {
-            binding.apply {
-                movieNameId.text = movie.movieName
-                movieLengthId.text = movie.movieLength
-                moviePosterId.setImageResource(movie.moviePoster)
-                movieRatingDataId.text = movie.movieRating
-                movieGenreId.text = movie.movieGenre
-            }
-        }
+//        fun bind(movie: Movie) {
+//            binding.apply {
+//                movieNameId.text = movie.movieName
+//                movieLengthId.text = movie.movieLength
+//                moviePosterId.setImageResource(movie.moviePoster)
+//                movieRatingDataId.text = movie.movieRating
+//                movieGenreId.text = movie.movieGenre
+//            }
+//        }
     }
 
     interface OnMovieItemClickListener {
