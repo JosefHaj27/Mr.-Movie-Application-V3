@@ -102,7 +102,8 @@
                 android:paddingVertical="5dp"
                 app:layout_constraintBottom_toTopOf="@+id/movie_length_id"
                 app:layout_constraintStart_toEndOf="@+id/card_view_id"
-                app:layout_constraintTop_toBottomOf="@+id/movie_rating_data_id" />
+                app:layout_constraintTop_toBottomOf="@+id/movie_rating_data_id"
+                />
 
             <TextView
                 android:id="@+id/movie_length_id"

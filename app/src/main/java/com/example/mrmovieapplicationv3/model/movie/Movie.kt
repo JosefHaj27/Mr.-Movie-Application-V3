@@ -11,6 +11,7 @@ data class Movie(
     @SerializedName("show")
     val show: Show,
 ) : Parcelable {
+
     fun initializeAllLists(context: Context): List<Movie> {
         val names = context.resources.getStringArray(R.array.movie_names).toList()
         val desc = context.resources.getStringArray(R.array.movie_descriptions).toList()

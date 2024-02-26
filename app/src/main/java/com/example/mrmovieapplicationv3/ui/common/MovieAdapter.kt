@@ -2,10 +2,13 @@ package com.example.mrmovieapplicationv3.ui.common
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
 import com.example.mrmovieapplicationv3.model.movie.Movie
+import utils.GlobalKeys
 
 class MovieAdapter(
     private val context: Context,
@@ -41,16 +44,14 @@ class MovieAdapter(
         fun bind(movie: Movie) {
             binding.apply {
                 movieNameId.text = movie.show.name
-                movieLengthId.text = movie.show.runtime?.toString()
+                movieLengthId.text = loadMoviesDuration(movie)
                 movieRatingDataId.text = bindRatingData(movie)
-                movieGenreId.text = "asdsdsdasd"
-//                moviePosterId.setImageResource(movie.moviePoster) // Using Glide
-                movieGenreId.text = movie.show.genres.toString()
+                movieGenreId.text = bindGenresData(movie)
+                loadMoviesPoster(movie)
             }
         }
 
-        private fun bindRatingData(movie: Movie): String
-        {
+        private fun bindRatingData(movie: Movie): String {
             return if (movie.show.rating?.average != null) {
                 movie.show.rating.average.toString()
             } else {
@@ -58,24 +59,51 @@ class MovieAdapter(
             }
         }
 
-        private fun bindGenresData(movie: Movie): String
-        {
+        private fun bindGenresData(movie: Movie): String {
             val mGenres = movie.show.genres?.size
-            if (mGenres != null)
-            {
-                if (mGenres != 0)
-                {
-                    return movie.show.genres[0]
-                }
-                else{
-                    return " "
-                }
-            }
-            else
-            {
+            if (mGenres != null && mGenres != 0) {
+                binding.movieGenreId.visibility = View.VISIBLE
+                return movie.show.genres[0]
+            } else {
+                binding.movieGenreId.visibility = View.INVISIBLE
                 return " "
             }
-            return " "
+        }
+
+        private fun loadMoviesPoster(movie: Movie) {
+            val moviePosterOriginal = movie.show.image?.original
+            val moviePosterMedium = movie.show.image?.medium
+            val bindPosterImage = binding.moviePosterId
+
+            if (moviePosterOriginal != null) {
+                Glide.with(context).load(moviePosterOriginal).into(bindPosterImage)
+            } else if (moviePosterMedium != null) {
+                Glide.with(context).load(moviePosterMedium).into(bindPosterImage)
+            } else {
+                Glide.with(context).load(GlobalKeys.NO_IMAGE_URL).into(bindPosterImage)
+            }
+        }
+
+        private fun loadMoviesDuration(movie: Movie): String {
+            val durationOfMovie = movie.show.runtime
+            var displayedDuration = " "
+            var minutes = 0
+            var hours = 0
+            if (durationOfMovie == null) {
+                binding.clockImageId.visibility = View.INVISIBLE
+                return displayedDuration // or it can be set to unknown
+            } else {
+                if (durationOfMovie % 60 == 0) {
+                    hours = durationOfMovie / 60
+                    minutes = durationOfMovie % 60
+                    displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
+                } else {
+                    hours = 0
+                    minutes = durationOfMovie
+                    displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
+                }
+            }
+            return displayedDuration
         }
     }
 

@@ -1,16 +1,15 @@
 package com.example.mrmovieapplicationv3.ui.details
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.method.ScrollingMovementMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mrmovieapplicationv3.R
+import com.bumptech.glide.Glide
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
 import com.example.mrmovieapplicationv3.model.movie.Movie
 import utils.GlobalKeys
-import utils.MovieSharedPreference
 
 
 class DetailActivity : AppCompatActivity() {
@@ -31,65 +30,95 @@ class DetailActivity : AppCompatActivity() {
             intent.getParcelableExtra(GlobalKeys.MOVIE_DATA)
         }
 
-        val id = movie?.show?.id ?: return
-
         binding.apply {
-            movieNameDetailActId.text = movie.show.name
-//            backgroundImageId.setImageResource(movie.show.) // Later using GLIDE
-            lengthDataId.text = movie.show.runtime?.toString()
-            descDataId.apply {
-                text = movie.show.summary
-                movementMethod = ScrollingMovementMethod()
-        // TODO::remove the html elements from the text
+            movie?.let {
+                movieNameDetailActId.text = it.show.name
+                loadMoviesPoster(it)
+                lengthDataId.text = loadMoviesDuration(it)
+                loadMoviesDesc(it)
+                movieRatingDataId.text = bindRatingData(it)
+                movieGenreId.text = bindGenresData(it)
+                languageDataId.text = loadMoviesLanguage(it)
             }
-            movieRatingDataId.text = bindRatingData(movie)
-            movieGenreId.text = bindGenresData(movie) //movie.show.genres.toString()
             backButtonImageId.setOnClickListener {
                 onBackBtnPressed()
             }
         }
     }
 
-    private fun bindRatingData(movie: Movie): String
-    {
+    private fun loadMoviesLanguage(movie: Movie): String {
+        val language = movie.show.language
+        if (language == null) {
+            return " "
+        } else {
+            return language
+        }
+    }
+
+    private fun loadMoviesDesc(movie: Movie) {
+        binding.descDataId.apply {
+            val descText = movie.show.summary
+            text = Html.fromHtml(descText, 0).toString()
+            movementMethod = ScrollingMovementMethod()
+        }
+    }
+
+    private fun loadMoviesPoster(movie: Movie) {
+        val moviePosterOriginal = movie.show.image?.original
+        val moviePosterMedium = movie.show.image?.medium
+        val bindBackgroundImage = binding.backgroundImageId
+
+        if (moviePosterOriginal != null) {
+            Glide.with(this).load(moviePosterOriginal).into(bindBackgroundImage)
+        } else if (moviePosterMedium != null) {
+            Glide.with(this).load(moviePosterMedium).into(bindBackgroundImage)
+        } else {
+            Glide.with(this).load(GlobalKeys.NO_IMAGE_URL).into(bindBackgroundImage)
+        }
+    }
+
+    private fun bindRatingData(movie: Movie): String {
         return if (movie.show.rating?.average != null) {
             movie.show.rating.average.toString()
         } else {
             0.toString()
         }
     }
-    private fun bindGenresData(movie: Movie): String
-    {
+
+    private fun bindGenresData(movie: Movie): String {
         val mGenres = movie.show.genres?.size
-        if (mGenres != null)
-        {
-            if (mGenres != 0)
-            {
-                return movie.show.genres[0]
-            }
-            else{
-                binding.movieGenreId.visibility = View.INVISIBLE
-                return ""
-            }
-        }
-        else
-        {
+        if (mGenres != null && mGenres != 0) {
+            binding.movieGenreId.visibility = View.VISIBLE
+            return movie.show.genres[0]
+        } else {
             binding.movieGenreId.visibility = View.INVISIBLE
-            return ""
+            return " "
         }
-        binding.movieGenreId.visibility = View.INVISIBLE
-        return ""
     }
+
+    private fun loadMoviesDuration(movie: Movie): String {
+        val durationOfMovie = movie.show.runtime
+        var displayedDuration = " "
+        var minutes = 0
+        var hours = 0
+        if (durationOfMovie == null) {
+            binding.languageDataId.visibility = View.INVISIBLE
+            return displayedDuration // or it can be set to unknown
+        } else {
+            if (durationOfMovie % 60 == 0) {
+                hours = durationOfMovie / 60
+                minutes = durationOfMovie % 60
+                displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
+            } else {
+                hours = 0
+                minutes = durationOfMovie
+                displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
+            }
+        }
+        return displayedDuration
+    }
+
     private fun onBackBtnPressed() {
         finish()
     }
-
-//    private fun broadcastBookmarkedIntent(movie: Movie)
-//    {
-//        val bookmarkedIntent = Intent()
-//        bookmarkedIntent.action = GlobalKeys.BROADCAST_ACTION
-////        bookmarkedIntent.putExtra(GlobalKeys.MOVIE_DATA, movie) // send object
-////        println("Broadcast message has been sent movie booked/unbooked is ${movie.movieName}")
-//        this@DetailActivity.sendBroadcast(bookmarkedIntent)
-//    }
 }

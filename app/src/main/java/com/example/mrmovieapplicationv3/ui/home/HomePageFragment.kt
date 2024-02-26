@@ -17,8 +17,7 @@ import retrofit2.Response
 import utils.ApiClient
 import utils.GlobalKeys
 
-class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
-{
+class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
     private val TAG = "HOME_PAGE_FRAGMENT"
@@ -32,45 +31,39 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener
         return binding.root
     }
 
-    private fun initializing()
-    {
+    private fun initializing() {
         callingAPIForMoviesData()
     }
-    private fun setupAdapter(movies: List<Movie>)
-    {
+
+    private fun setupAdapter(movies: List<Movie>) {
         binding.recycleViewId.adapter = MovieAdapter(requireContext(), movies, this)
         binding.recycleViewId.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun callingAPIForMoviesData()
-    {
+    private fun callingAPIForMoviesData() {
         val call = ApiClient.apiService.getMovies()
         call.enqueue(object : retrofit2.Callback<List<Movie>> {
             override fun onResponse(call: Call<List<Movie>>, response: Response<List<Movie>>) {
-                if(response.isSuccessful)
-                {
+                if (response.isSuccessful) {
                     val moviesBodyData = response.body()
                     moviesBodyData?.let {
-
                         setupAdapter(moviesBodyData)
                     }
-//                    moviesBodyData[]
                 }
             }
+
             override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
                 Log.d(TAG, "onFailure: $t")
             }
         })
     }
 
-    override fun onDestroyView()
-    {
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    override fun onMovieItemClick(movie: Movie)
-    {
+    override fun onMovieItemClick(movie: Movie) {
         val myIntent = Intent(requireContext(), DetailActivity::class.java)
         myIntent.putExtra(GlobalKeys.MOVIE_DATA, movie)
         startActivity(myIntent)
