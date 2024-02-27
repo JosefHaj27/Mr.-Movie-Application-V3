@@ -1,8 +1,8 @@
-package utils
+package com.example.mrmovieapplicationv3.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.mrmovieapplicationv3.model.movie.Movie
+import com.example.mrmovieapplicationv3.model.data.Movie
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type

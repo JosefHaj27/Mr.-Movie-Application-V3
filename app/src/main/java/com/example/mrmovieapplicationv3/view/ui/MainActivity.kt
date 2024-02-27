@@ -1,11 +1,11 @@
-package com.example.mrmovieapplicationv3.ui
+package com.example.mrmovieapplicationv3.view.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.mrmovieapplicationv3.databinding.ActivityMainBinding
 import com.example.mrmovieapplicationv3.ui.bookmark.BookmarkPageFragment
-import com.example.mrmovieapplicationv3.ui.home.HomePageFragment
+import com.example.mrmovieapplicationv3.view.ui.home.HomePageFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -35,10 +35,12 @@ class MainActivity : AppCompatActivity() {
                         handlingFragmentsAddOrReplace(homePageFragment, homeFragmentTag)
                         oldItem = bindingItemId(0)
                     }
+
                     bindingItemId(2) -> {
                         handlingFragmentsAddOrReplace(bookmarkPageFragment, bookmarkFragmentTag)
                         oldItem = bindingItemId(2)
                     }
+
                     else -> println("Nothing selected")
                 }
             }
@@ -66,12 +68,9 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         var fragmentExists = fragmentManager.findFragmentByTag(fragTag)
 
-        if (fragmentExists == null)
-        {
+        if (fragmentExists == null) {
             addFragment(fragment, fragTag)
-        }
-        else
-        {
+        } else {
             replaceFragment(fragment, fragTag)
         }
     }

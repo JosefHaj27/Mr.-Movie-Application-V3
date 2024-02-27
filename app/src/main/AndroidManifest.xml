@@ -19,7 +19,7 @@
             android:label="@string/title_activity_detail"
             android:theme="@style/Theme.MrMovieApplicationV3" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".view.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

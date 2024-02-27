@@ -1,8 +1,7 @@
-package utils
+package com.example.mrmovieapplicationv3.repository.network
 
-import com.example.mrmovieapplicationv3.model.movie.Movie
+import com.example.mrmovieapplicationv3.model.data.Movie
 import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.GET
 
 interface ApiService

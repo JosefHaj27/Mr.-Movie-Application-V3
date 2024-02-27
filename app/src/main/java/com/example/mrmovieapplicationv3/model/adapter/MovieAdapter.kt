@@ -1,4 +1,4 @@
-package com.example.mrmovieapplicationv3.ui.common
+package com.example.mrmovieapplicationv3.model.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.mrmovieapplicationv3.utils.GlobalKeys
+import com.example.mrmovieapplicationv3.model.data.Movie
 import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
-import com.example.mrmovieapplicationv3.model.movie.Movie
-import utils.GlobalKeys
 
 class MovieAdapter(
     private val context: Context,

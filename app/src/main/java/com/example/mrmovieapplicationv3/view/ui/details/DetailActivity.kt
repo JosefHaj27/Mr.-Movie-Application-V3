@@ -8,8 +8,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
-import com.example.mrmovieapplicationv3.model.movie.Movie
-import utils.GlobalKeys
+import com.example.mrmovieapplicationv3.model.data.Movie
+import com.example.mrmovieapplicationv3.utils.GlobalKeys
 
 
 class DetailActivity : AppCompatActivity() {

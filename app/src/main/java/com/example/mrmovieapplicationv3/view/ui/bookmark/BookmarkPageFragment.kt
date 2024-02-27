@@ -1,11 +1,7 @@
 package com.example.mrmovieapplicationv3.ui.bookmark
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mrmovieapplicationv3.databinding.FragmentBookmarkPageBinding
-import com.example.mrmovieapplicationv3.model.movie.Movie
-import com.example.mrmovieapplicationv3.ui.common.MovieAdapter
+import com.example.mrmovieapplicationv3.model.data.Movie
+import com.example.mrmovieapplicationv3.model.adapter.MovieAdapter
 import com.example.mrmovieapplicationv3.ui.details.DetailActivity
-import utils.GlobalKeys
-import utils.MovieSharedPreference
+import com.example.mrmovieapplicationv3.utils.GlobalKeys
+import com.example.mrmovieapplicationv3.utils.MovieSharedPreference
 
 class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private var _binding: FragmentBookmarkPageBinding? = null

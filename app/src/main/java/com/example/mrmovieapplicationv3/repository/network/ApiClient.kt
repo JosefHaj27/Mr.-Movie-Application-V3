@@ -1,8 +1,7 @@
-package utils
+package com.example.mrmovieapplicationv3.repository.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
 
 object RetrofitClient {
     private const val BASE_URL = "https://api.tvmaze.com/"

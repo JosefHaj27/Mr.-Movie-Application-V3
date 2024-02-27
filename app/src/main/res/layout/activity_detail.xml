@@ -9,14 +9,13 @@
 
     <ImageView
         android:id="@+id/background_image_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="300dp"
         android:src="@drawable/the_godfather"
-        app:layout_constraintBottom_toBottomOf="@+id/card_view_id"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/back_button_image_id"
@@ -35,6 +34,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="200dp"
         app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

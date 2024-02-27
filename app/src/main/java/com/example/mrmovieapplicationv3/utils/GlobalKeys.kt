@@ -1,4 +1,4 @@
-package utils
+package com.example.mrmovieapplicationv3.utils
 
 class GlobalKeys {
     companion object {
