@@ -8,4 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class Movie(
     @SerializedName("show")
     val show: Show,
+
+    var isBookmarked: Boolean = false
 ) : Parcelable

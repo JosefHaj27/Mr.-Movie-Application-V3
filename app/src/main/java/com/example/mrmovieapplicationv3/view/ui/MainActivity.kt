@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.mrmovieapplicationv3.databinding.ActivityMainBinding
-import com.example.mrmovieapplicationv3.ui.bookmark.BookmarkPageFragment
+import com.example.mrmovieapplicationv3.view.ui.bookmark.BookmarkPageFragment
 import com.example.mrmovieapplicationv3.view.ui.home.HomePageFragment
 
 class MainActivity : AppCompatActivity() {

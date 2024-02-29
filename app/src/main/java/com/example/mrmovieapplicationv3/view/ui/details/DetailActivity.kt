@@ -1,5 +1,6 @@
-package com.example.mrmovieapplicationv3.ui.details
+package com.example.mrmovieapplicationv3.view.ui.details
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -7,6 +8,7 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.mrmovieapplicationv3.R
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
 import com.example.mrmovieapplicationv3.model.data.Movie
 import com.example.mrmovieapplicationv3.utils.GlobalKeys
@@ -29,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra(GlobalKeys.MOVIE_DATA)
         }
+        var id: Int = 0
 
         binding.apply {
             movie?.let {
@@ -39,6 +42,19 @@ class DetailActivity : AppCompatActivity() {
                 movieRatingDataId.text = bindRatingData(it)
                 movieGenreId.text = bindGenresData(it)
                 languageDataId.text = loadMoviesLanguage(it)
+                if (movie.show.id != null) {
+                    id = movie.show.id
+                }
+                saveImageId.setOnClickListener {
+                    if (movie.isBookmarked) {
+                        movie.isBookmarked = false
+                        saveImageId.setImageResource(R.drawable.unbookmark)
+                    } else {
+                        movie.isBookmarked = true
+                        saveImageId.setImageResource(R.drawable.bookmark)
+                    }
+                    broadcastBookmarkedIntent(movie)
+                }
             }
             backButtonImageId.setOnClickListener {
                 onBackBtnPressed()
@@ -120,5 +136,14 @@ class DetailActivity : AppCompatActivity() {
 
     private fun onBackBtnPressed() {
         finish()
+    }
+
+    private fun broadcastBookmarkedIntent(movie: Movie) {
+        val bookmarkedIntent = Intent()
+//        movie.isBookmarked = !movie.isBookmarked
+        bookmarkedIntent.action = GlobalKeys.BROADCAST_ACTION
+        bookmarkedIntent.putExtra(GlobalKeys.MOVIE_DATA, movie) // send object
+        println("Broadcast message has been sent movie booked/unbooked is ${movie.show.name}, ${movie.isBookmarked}")
+        this@DetailActivity.sendBroadcast(bookmarkedIntent)
     }
 }

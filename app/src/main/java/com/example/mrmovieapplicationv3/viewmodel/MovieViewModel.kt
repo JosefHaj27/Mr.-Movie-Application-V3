@@ -9,15 +9,6 @@ import com.example.mrmovieapplicationv3.repository.network.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
-/*
-Here must be the logic. But, what logic (UI logic) exactly?
-I think:
-1. Fetching data from API. implemented here
-2. User interaction like, clicking on movies and open another activity.
-3. ?
-4. ?
-5. ?
- */
 
 class MovieViewModel : ViewModel() {
     private val TAG = "Movie_View_Model"

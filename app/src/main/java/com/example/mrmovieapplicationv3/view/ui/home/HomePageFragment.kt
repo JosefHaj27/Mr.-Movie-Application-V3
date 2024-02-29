@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mrmovieapplicationv3.databinding.FragmentHomePageBinding
 import com.example.mrmovieapplicationv3.model.adapter.MovieAdapter
 import com.example.mrmovieapplicationv3.model.data.Movie
-import com.example.mrmovieapplicationv3.ui.details.DetailActivity
 import com.example.mrmovieapplicationv3.utils.GlobalKeys
+import com.example.mrmovieapplicationv3.view.ui.details.DetailActivity
 import com.example.mrmovieapplicationv3.viewmodel.MovieViewModel
 
 // Must observe any changes happened in the ViewModel.
@@ -22,7 +22,8 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
     private val TAG = "HOME_PAGE_FRAGMENT"
-    private lateinit var movieViewModel: MovieViewModel
+    private val movieViewModel: MovieViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +35,6 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     }
 
     private fun initializing() {
-        movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
         movieViewModel.getMovies().observe(viewLifecycleOwner) {
             setupAdapter(it)
         }
