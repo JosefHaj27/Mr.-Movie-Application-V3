@@ -2,6 +2,7 @@ package com.example.mrmovieapplicationv3.view.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,8 @@ import com.example.mrmovieapplicationv3.model.data.Movie
 import com.example.mrmovieapplicationv3.utils.GlobalKeys
 import com.example.mrmovieapplicationv3.view.ui.details.DetailActivity
 import com.example.mrmovieapplicationv3.viewmodel.MovieViewModel
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 // Must observe any changes happened in the ViewModel.
 // It does not request any data only OBSERVE continuously the changes in the ViewModel,
@@ -25,8 +28,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private val movieViewModel: MovieViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomePageBinding.inflate(inflater, container, false)
         initializing()
@@ -37,6 +39,13 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private fun initializing() {
         movieViewModel.getMovies().observe(viewLifecycleOwner) {
             setupAdapter(it)
+            binding.apply {
+                swipeToRefreshId.setOnRefreshListener {
+                    movieViewModel.shuffleMovies(it)
+                    recycleViewId.adapter?.notifyDataSetChanged()
+                    Timer().schedule(1000) { swipeToRefreshId.isRefreshing = false }
+                }
+            }
         }
     }
 

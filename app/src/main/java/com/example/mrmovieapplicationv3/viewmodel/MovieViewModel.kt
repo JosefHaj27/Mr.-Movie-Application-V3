@@ -8,6 +8,7 @@ import com.example.mrmovieapplicationv3.model.data.Movie
 import com.example.mrmovieapplicationv3.repository.network.ApiClient
 import retrofit2.Call
 import retrofit2.Response
+import java.util.Collections
 
 
 class MovieViewModel : ViewModel() {
@@ -40,4 +41,5 @@ class MovieViewModel : ViewModel() {
     }
 
     fun getMovies(): LiveData<List<Movie>> = moviesLiveData
+    fun shuffleMovies(movies: List<Movie>) = Collections.shuffle(movies)
 }
