@@ -21,8 +21,8 @@ class MovieViewModel : ViewModel() {
         callingAPIForMoviesData()
     }
 
-    private fun callingAPIForMoviesData() {
-        val call = ApiClient.apiService.getMovies()
+    fun callingAPIForMoviesData(searchQuery: String? = "movies") {
+        val call = ApiClient.apiService.getMovies(searchQuery)
         call.enqueue(object : retrofit2.Callback<List<Movie>> {
             override fun onResponse(call: Call<List<Movie>>, response: Response<List<Movie>>) {
                 if (response.isSuccessful) {

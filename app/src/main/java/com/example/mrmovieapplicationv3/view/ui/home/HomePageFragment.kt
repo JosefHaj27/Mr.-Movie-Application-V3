@@ -2,7 +2,6 @@ package com.example.mrmovieapplicationv3.view.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,15 +38,40 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private fun initializing() {
         movieViewModel.getMovies().observe(viewLifecycleOwner) {
             setupAdapter(it)
-            binding.apply {
-                swipeToRefreshId.setOnRefreshListener {
-                    movieViewModel.shuffleMovies(it)
-                    recycleViewId.adapter?.notifyDataSetChanged()
-                    Timer().schedule(1000) { swipeToRefreshId.isRefreshing = false }
+            refreshListener(it)
+            searchViewListener()
+        }
+    }
+
+    private fun searchViewListener() {
+        binding.searchViewId.apply {
+            queryHint = "Search..."
+            setOnQueryTextListener(object :
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    movieViewModel.callingAPIForMoviesData(query)
+                    onActionViewCollapsed()
+                    setQuery(query, false)
+                    return true
                 }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return true
+                }
+            })
+        }
+    }
+
+    private fun refreshListener(movies: List<Movie>) {
+        binding.apply {
+            swipeToRefreshId.setOnRefreshListener {
+                movieViewModel.shuffleMovies(movies)
+                recycleViewId.adapter?.notifyDataSetChanged()
+                Timer().schedule(1000) { swipeToRefreshId.isRefreshing = false }
             }
         }
     }
+
 
     private fun setupAdapter(movies: List<Movie>) {
         binding.recycleViewId.adapter = MovieAdapter(requireContext(), movies, this)

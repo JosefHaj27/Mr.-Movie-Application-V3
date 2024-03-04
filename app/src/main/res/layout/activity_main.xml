@@ -22,15 +22,16 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-        <FrameLayout
-            android:id="@+id/frame_layout_id"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/mr_movie_id"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view_id"
-            />
+    <FrameLayout
+        android:id="@+id/frame_layout_id"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/mr_movie_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view_id"
+        />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view_id"
         android:layout_width="match_parent"
