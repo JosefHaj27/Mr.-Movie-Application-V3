@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mrmovieapplicationv3.databinding.OneRowLayoutBinding
-import com.example.mrmovieapplicationv3.model.data.Movie
 import com.example.mrmovieapplicationv3.model.data.Show
 import com.example.mrmovieapplicationv3.utils.GlobalKeys
 
@@ -94,8 +93,8 @@ class MovieAdapter(
                 binding.clockImageId.visibility = View.INVISIBLE
                 return displayedDuration // or it can be set to unknown
             } else {
-                hours = durationOfMovie/60
-                minutes = durationOfMovie%60
+                hours = durationOfMovie / 60
+                minutes = durationOfMovie % 60
                 displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
             }
             return displayedDuration

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mrmovieapplicationv3.databinding.FragmentHomePageBinding
 import com.example.mrmovieapplicationv3.model.adapter.MovieAdapter
-import com.example.mrmovieapplicationv3.model.data.Movie
 import com.example.mrmovieapplicationv3.model.data.Show
 import com.example.mrmovieapplicationv3.utils.GlobalKeys
 import com.example.mrmovieapplicationv3.view.ui.details.DetailActivity
@@ -92,8 +91,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(this@apply, newState)
-                    if (!recyclerView.canScrollVertically(1) && scrollState == RecyclerView.SCROLL_STATE_IDLE)
-                    {
+                    if (!recyclerView.canScrollVertically(1) && scrollState == RecyclerView.SCROLL_STATE_IDLE) {
                         pageNumber++
                         movieViewModel.callingAPIForShowsPagesData(pageNumber)
                         Log.d(TAG, "onScrollStateChanged: am I scrolling")

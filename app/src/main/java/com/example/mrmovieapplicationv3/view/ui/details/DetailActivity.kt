@@ -8,9 +8,7 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.mrmovieapplicationv3.R
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
-import com.example.mrmovieapplicationv3.model.data.Movie
 import com.example.mrmovieapplicationv3.model.data.Show
 import com.example.mrmovieapplicationv3.utils.GlobalKeys
 
@@ -122,8 +120,8 @@ class DetailActivity : AppCompatActivity() {
             binding.languageDataId.visibility = View.INVISIBLE
             return displayedDuration // or it can be set to unknown
         } else {
-            hours = durationOfMovie/60
-            minutes = durationOfMovie%60
+            hours = durationOfMovie / 60
+            minutes = durationOfMovie % 60
             displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
         }
         return displayedDuration
