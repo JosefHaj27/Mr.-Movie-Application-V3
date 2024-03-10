@@ -13,7 +13,7 @@ import com.example.mrmovieapplicationv3.utils.GlobalKeys
 class MovieAdapter(
     private val context: Context,
     private val movieItems: List<Show>,
-    private val listener: OnMovieItemClickListener?
+    private val listener: OnMovieItemClickListener?,
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(context)
@@ -33,7 +33,8 @@ class MovieAdapter(
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.topCardViewId.setOnClickListener {
-                val position = adapterPosition
+                val position =
+                    adapterPosition // TODO:: use bindingAdapterPosition instead and read more why adapterPosition is deprecated.
                 if (position != RecyclerView.NO_POSITION) {
                     val movie = movieItems[position]
                     listener?.onMovieItemClick(movie)

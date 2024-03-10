@@ -53,7 +53,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0") // for converting the JSON response from the API into a Java object.
     implementation("com.github.bumptech.glide:glide:4.16.0") // for Glide, loading images from URL
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01") // for SwipeRefreshLayout. 1.1.0 is the stable release.
-
+    implementation("androidx.paging:paging-runtime:3.2.1") // for pagination.
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

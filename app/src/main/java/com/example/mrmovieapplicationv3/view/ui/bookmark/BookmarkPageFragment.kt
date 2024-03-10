@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -85,10 +83,10 @@ class BookmarkPageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
         context?.unregisterReceiver(receiver)
     }
     private fun initializing() {
-        Log.d(TAG, "initializing: ${checkBookmarkedMovie()}")
-        movieAdapter = MovieAdapter(requireContext(), checkBookmarkedMovie(), this)
-        binding.recycleViewBookmarkId.adapter = movieAdapter
-        binding.recycleViewBookmarkId.layoutManager = LinearLayoutManager(requireContext())
+//        Log.d(TAG, "initializing: ${checkBookmarkedMovie()}")
+//        movieAdapter = MovieAdapter(requireContext(), checkBookmarkedMovie(), this)
+//        binding.recycleViewBookmarkId.adapter = movieAdapter
+//        binding.recycleViewBookmarkId.layoutManager = LinearLayoutManager(requireContext())
        // receive broadcast to construct the list of movies and send it the adapter.
     }
 

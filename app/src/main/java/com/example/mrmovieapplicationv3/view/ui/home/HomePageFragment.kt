@@ -40,6 +40,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     }
 
     private fun initializing() {
+        movieViewModel.callingAPIForMoviesData()
         movieViewModel.getMovies().observe(viewLifecycleOwner) {
             setupAdapter(it)
             refreshListener(it)
@@ -83,10 +84,10 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     }
 
     private fun setupAdapter(movies: List<Show>) {
-
         binding.recycleViewId.apply {
             adapter = MovieAdapter(requireContext(), movies, this@HomePageFragment)
             layoutManager = LinearLayoutManager(requireContext())
+
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -95,6 +96,10 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
                         pageNumber++
                         movieViewModel.callingAPIForShowsPagesData(pageNumber)
                         Log.d(TAG, "onScrollStateChanged: am I scrolling")
+
+
+//                        scrollState = RecyclerView.SCREEN_STATE_OFF
+                        // TODO:: it keeps scroll after it reach the bottom.
                     }
                 }
             })

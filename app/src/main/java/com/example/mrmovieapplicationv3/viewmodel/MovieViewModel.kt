@@ -13,14 +13,11 @@ import java.util.Collections
 
 
 class MovieViewModel : ViewModel() {
+
     private val TAG = "Movie_View_Model"
     private var _moviesMutableLiveData = MutableLiveData<List<Show>>()
     private val moviesLiveData: LiveData<List<Show>>
         get() = _moviesMutableLiveData
-
-    init {
-        callingAPIForMoviesData()
-    }
 
     fun callingAPIForMoviesData(searchQuery: String? = "movies") {
         val call = ApiClient.apiService.getMovies(searchQuery)
@@ -32,7 +29,12 @@ class MovieViewModel : ViewModel() {
                         val showsArray = moviesBodyData.map {
                             it.show
                         }
-                        _moviesMutableLiveData.postValue(showsArray)
+//                        _moviesMutableLiveData.postValue(showsArray) // TODO:: replace with new list.
+//                        _moviesMutableLiveData.value = showsArray
+
+//                        _moviesMutableLiveData.postValue((_moviesMutableLiveData.value)?.plus(showsArray))
+                        _moviesMutableLiveData.value = (_moviesMutableLiveData.value)?.plus(showsArray)
+                        moviesLiveData.
                     }
                 }
             }
@@ -44,6 +46,7 @@ class MovieViewModel : ViewModel() {
         })
     }
 
+
     fun callingAPIForShowsPagesData(pageNumber: Int = 1) {
         val call = ApiClient.apiService.getShows(pageNumber)
         call.enqueue(object : retrofit2.Callback<List<Show>> {
@@ -54,7 +57,9 @@ class MovieViewModel : ViewModel() {
 //                         orEmpty(), Returns this List if it's not null and the empty list otherwise.
 //                        val updateList = moviesLiveData.value.orEmpty().toMutableList()
 //                        updateList.addAll(it)
-                        _moviesMutableLiveData.postValue(it)
+//                        _moviesMutableLiveData.value = it
+                        _moviesMutableLiveData.value = (_moviesMutableLiveData.value)?.plus(it)
+
                         // TODO:: Here add value to the list, maybe!?
                     }
                 }
