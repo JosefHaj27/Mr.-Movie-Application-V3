@@ -29,12 +29,8 @@ class MovieViewModel : ViewModel() {
                         val showsArray = moviesBodyData.map {
                             it.show
                         }
-//                        _moviesMutableLiveData.postValue(showsArray) // TODO:: replace with new list.
-//                        _moviesMutableLiveData.value = showsArray
-
-//                        _moviesMutableLiveData.postValue((_moviesMutableLiveData.value)?.plus(showsArray))
-                        _moviesMutableLiveData.value = (_moviesMutableLiveData.value)?.plus(showsArray)
-                        moviesLiveData.
+                        _moviesMutableLiveData.value =
+                            (_moviesMutableLiveData.value)?.plus(showsArray) ?: showsArray
                     }
                 }
             }
@@ -47,20 +43,15 @@ class MovieViewModel : ViewModel() {
     }
 
 
-    fun callingAPIForShowsPagesData(pageNumber: Int = 1) {
+    fun callingAPIForShowsPagesData(pageNumber: Int) {
         val call = ApiClient.apiService.getShows(pageNumber)
         call.enqueue(object : retrofit2.Callback<List<Show>> {
             override fun onResponse(call: Call<List<Show>>, response: Response<List<Show>>) {
                 if (response.isSuccessful) {
                     val moviesBodyData = response.body()
                     moviesBodyData?.let {
-//                         orEmpty(), Returns this List if it's not null and the empty list otherwise.
-//                        val updateList = moviesLiveData.value.orEmpty().toMutableList()
-//                        updateList.addAll(it)
-//                        _moviesMutableLiveData.value = it
-                        _moviesMutableLiveData.value = (_moviesMutableLiveData.value)?.plus(it)
-
-                        // TODO:: Here add value to the list, maybe!?
+                        _moviesMutableLiveData.value =
+                            (_moviesMutableLiveData.value)?.plus(it) ?: it
                     }
                 }
             }

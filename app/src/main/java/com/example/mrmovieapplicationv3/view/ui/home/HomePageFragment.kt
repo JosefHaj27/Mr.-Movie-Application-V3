@@ -64,7 +64,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
                         return true
                     }
                 })
-                Log.d(TAG, "searchViewListener: $isIconified")
+                Log.d(TAG, "searchViewListener if-statement: $isIconified")
             } else {
                 setOnQueryTextListener(object : OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -78,7 +78,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
                         return true
                     }
                 })
-                Log.d(TAG, "searchViewListener: $isIconified")
+                Log.d(TAG, "searchViewListener else-statement: $isIconified")
             }
         }
     }
@@ -88,21 +88,19 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
             adapter = MovieAdapter(requireContext(), movies, this@HomePageFragment)
             layoutManager = LinearLayoutManager(requireContext())
 
-
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(this@apply, newState)
                     if (!recyclerView.canScrollVertically(1) && scrollState == RecyclerView.SCROLL_STATE_IDLE) {
                         pageNumber++
                         movieViewModel.callingAPIForShowsPagesData(pageNumber)
-                        Log.d(TAG, "onScrollStateChanged: am I scrolling")
+                        Log.d(TAG, "onScrollStateChanged: am I scrolling?")
 
-
-//                        scrollState = RecyclerView.SCREEN_STATE_OFF
-                        // TODO:: it keeps scroll after it reach the bottom.
+//                  TODO:: BUG:: when the end reached, it refresh the page and set at you at the top!?
                     }
                 }
             })
+            adapter?.notifyDataSetChanged()
         }
     }
 
