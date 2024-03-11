@@ -13,7 +13,6 @@ import java.util.Collections
 
 
 class MovieViewModel : ViewModel() {
-
     private val TAG = "Movie_View_Model"
     private var _moviesMutableLiveData = MutableLiveData<List<Show>>()
     private val moviesLiveData: LiveData<List<Show>>
@@ -41,7 +40,6 @@ class MovieViewModel : ViewModel() {
             }
         })
     }
-
 
     fun callingAPIForShowsPagesData(pageNumber: Int) {
         val call = ApiClient.apiService.getShows(pageNumber)

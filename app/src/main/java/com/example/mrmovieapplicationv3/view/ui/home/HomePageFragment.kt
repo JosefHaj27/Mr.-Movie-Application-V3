@@ -2,7 +2,6 @@ package com.example.mrmovieapplicationv3.view.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,13 +19,9 @@ import com.example.mrmovieapplicationv3.viewmodel.MovieViewModel
 import java.util.Timer
 import kotlin.concurrent.schedule
 
-// Must observe any changes happened in the ViewModel.
-// It does not request any data only OBSERVE continuously the changes in the ViewModel,
-// then it get the data when the changes occurs.
 class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
-    private val TAG = "HOME_PAGE_FRAGMENT"
     private val movieViewModel: MovieViewModel by viewModels()
     private var pageNumber = 1
 
@@ -64,7 +59,6 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
                         return true
                     }
                 })
-                Log.d(TAG, "searchViewListener if-statement: $isIconified")
             } else {
                 setOnQueryTextListener(object : OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -78,7 +72,6 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
                         return true
                     }
                 })
-                Log.d(TAG, "searchViewListener else-statement: $isIconified")
             }
         }
     }
@@ -94,9 +87,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
                     if (!recyclerView.canScrollVertically(1) && scrollState == RecyclerView.SCROLL_STATE_IDLE) {
                         pageNumber++
                         movieViewModel.callingAPIForShowsPagesData(pageNumber)
-                        Log.d(TAG, "onScrollStateChanged: am I scrolling?")
-
-//                  TODO:: BUG:: when the end reached, it refresh the page and set at you at the top!?
+//                  TODO:: BUG:: when the end reached, it refresh the page and start from the top of the page.
                     }
                 }
             })
