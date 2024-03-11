@@ -28,8 +28,7 @@ class MovieViewModel : ViewModel() {
                         val showsArray = moviesBodyData.map {
                             it.show
                         }
-                        _moviesMutableLiveData.value =
-                            (_moviesMutableLiveData.value)?.plus(showsArray) ?: showsArray
+                        _moviesMutableLiveData.postValue(showsArray)
                     }
                 }
             }

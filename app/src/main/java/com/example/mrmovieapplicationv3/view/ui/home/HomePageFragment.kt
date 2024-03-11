@@ -2,6 +2,7 @@ package com.example.mrmovieapplicationv3.view.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,27 +45,38 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     }
 
     private fun searchViewListener() {
+        val TAG = "searchViewListener"
         binding.searchViewId.apply {
             queryHint = "Search..."
             if (isIconified) {
+            // true, the search view is in its iconified state, meaning it is collapsed and only showing an icon or a small search box.
+            // false, the search view is expanded, showing a larger input field where the user can enter search queries.
                 setOnQueryTextListener(object : OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
-                        movieViewModel.callingAPIForMoviesData(query)
-                        onActionViewCollapsed()
-                        setQuery(query, false)
+                        if(!query.isNullOrBlank())
+                        {
+                            movieViewModel.callingAPIForMoviesData(query)
+                            onActionViewCollapsed()
+                            setQuery(query, false)
+                        }
                         return true
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
+                        if(newText.isNullOrBlank())
+                        {
+                            movieViewModel.callingAPIForMoviesData()
+                            return true
+                        }
+                        Log.d(TAG, "onQueryTextChange, value is: $newText, is it empty? ${newText?.isBlank()}")
                         return true
                     }
+
                 })
             } else {
                 setOnQueryTextListener(object : OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         movieViewModel.callingAPIForShowsPagesData(pageNumber)
-                        onActionViewCollapsed()
-                        setQuery(query, false)
                         return true
                     }
 

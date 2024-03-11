@@ -33,8 +33,7 @@ class MovieAdapter(
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.topCardViewId.setOnClickListener {
-                val position =
-                    adapterPosition // TODO:: use bindingAdapterPosition instead and read more why adapterPosition is deprecated.
+                val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val movie = movieItems[position]
                     listener?.onMovieItemClick(movie)
