@@ -36,7 +36,7 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
     }
 
     private fun initializing() {
-        movieViewModel.callingAPIForMoviesData()
+        movieViewModel.callingAPIForShowsPagesData(pageNumber)
         movieViewModel.getMovies().observe(viewLifecycleOwner) {
             setupAdapter(it)
             refreshListener(it)
@@ -49,26 +49,31 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
         binding.searchViewId.apply {
             queryHint = "Search..."
             if (isIconified) {
-            // true, the search view is in its iconified state, meaning it is collapsed and only showing an icon or a small search box.
-            // false, the search view is expanded, showing a larger input field where the user can enter search queries.
+                // true, the search view is in its iconified state, meaning it is collapsed and only showing an icon or a small search box.
+                // false, the search view is expanded, showing a larger input field where the user can enter search queries.
                 setOnQueryTextListener(object : OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
-                        if(!query.isNullOrBlank())
-                        {
+                        if (!query.isNullOrBlank()) {
                             movieViewModel.callingAPIForMoviesData(query)
                             onActionViewCollapsed()
+//                            clearFocus()
                             setQuery(query, false)
+//                            movieViewModel.callingAPIForMoviesData()
+                        }else{
+                            movieViewModel.callingAPIForMoviesData()
                         }
                         return true
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        if(newText.isNullOrBlank())
-                        {
+                        if (newText.isNullOrBlank()) {
                             movieViewModel.callingAPIForMoviesData()
                             return true
                         }
-                        Log.d(TAG, "onQueryTextChange, value is: $newText, is it empty? ${newText?.isBlank()}")
+                        Log.d(
+                            TAG,
+                            "onQueryTextChange, value is: $newText, is it empty? ${newText?.isBlank()}"
+                        )
                         return true
                     }
 
@@ -77,6 +82,9 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
                 setOnQueryTextListener(object : OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         movieViewModel.callingAPIForShowsPagesData(pageNumber)
+//                        onActionViewCollapsed()
+//                        clearFocus()
+//                        setQuery(query, false)
                         return true
                     }
 
@@ -97,8 +105,8 @@ class HomePageFragment : Fragment(), MovieAdapter.OnMovieItemClickListener {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(this@apply, newState)
                     if (!recyclerView.canScrollVertically(1) && scrollState == RecyclerView.SCROLL_STATE_IDLE) {
-                        pageNumber++
-                        movieViewModel.callingAPIForShowsPagesData(pageNumber)
+//                        pageNumber++
+                        movieViewModel.callingAPIForShowsPagesData(++pageNumber)
 //                  TODO:: BUG:: when the end reached, it refresh the page and start from the top of the page.
                     }
                 }
