@@ -1,6 +1,5 @@
 package com.example.mrmovieapplicationv3.view.ui.details
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -8,9 +7,8 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.mrmovieapplicationv3.R
 import com.example.mrmovieapplicationv3.databinding.ActivityDetailBinding
-import com.example.mrmovieapplicationv3.model.data.Movie
+import com.example.mrmovieapplicationv3.model.data.Show
 import com.example.mrmovieapplicationv3.utils.GlobalKeys
 
 
@@ -26,35 +24,21 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initializing() {
-        val movie: Movie? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(GlobalKeys.MOVIE_DATA, Movie::class.java)
+        val movie: Show? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(GlobalKeys.MOVIE_DATA, Show::class.java)
         } else {
             intent.getParcelableExtra(GlobalKeys.MOVIE_DATA)
         }
-        var id: Int = 0
 
         binding.apply {
             movie?.let {
-                movieNameDetailActId.text = it.show.name
+                movieNameDetailActId.text = it.name
                 loadMoviesPoster(it)
                 lengthDataId.text = loadMoviesDuration(it)
                 loadMoviesDesc(it)
                 movieRatingDataId.text = bindRatingData(it)
                 movieGenreId.text = bindGenresData(it)
                 languageDataId.text = loadMoviesLanguage(it)
-                if (movie.show.id != null) {
-                    id = movie.show.id
-                }
-                saveImageId.setOnClickListener {
-                    if (movie.isBookmarked) {
-                        movie.isBookmarked = false
-                        saveImageId.setImageResource(R.drawable.unbookmark)
-                    } else {
-                        movie.isBookmarked = true
-                        saveImageId.setImageResource(R.drawable.bookmark)
-                    }
-                    broadcastBookmarkedIntent(movie)
-                }
             }
             backButtonImageId.setOnClickListener {
                 onBackBtnPressed()
@@ -62,8 +46,8 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadMoviesLanguage(movie: Movie): String {
-        val language = movie.show.language
+    private fun loadMoviesLanguage(movie: Show): String {
+        val language = movie.language
         if (language == null) {
             return " "
         } else {
@@ -71,17 +55,17 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadMoviesDesc(movie: Movie) {
+    private fun loadMoviesDesc(movie: Show) {
         binding.descDataId.apply {
-            val descText = movie.show.summary
+            val descText = movie.summary
             text = Html.fromHtml(descText, 0).toString()
             movementMethod = ScrollingMovementMethod()
         }
     }
 
-    private fun loadMoviesPoster(movie: Movie) {
-        val moviePosterOriginal = movie.show.image?.original
-        val moviePosterMedium = movie.show.image?.medium
+    private fun loadMoviesPoster(movie: Show) {
+        val moviePosterOriginal = movie.image?.original
+        val moviePosterMedium = movie.image?.medium
         val bindBackgroundImage = binding.backgroundImageId
 
         if (moviePosterOriginal != null) {
@@ -93,57 +77,42 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun bindRatingData(movie: Movie): String {
-        return if (movie.show.rating?.average != null) {
-            movie.show.rating.average.toString()
+    private fun bindRatingData(movie: Show): String {
+        return if (movie.rating?.average != null) {
+            movie.rating.average.toString()
         } else {
             0.toString()
         }
     }
 
-    private fun bindGenresData(movie: Movie): String {
-        val mGenres = movie.show.genres?.size
+    private fun bindGenresData(movie: Show): String {
+        val mGenres = movie.genres?.size
         if (mGenres != null && mGenres != 0) {
             binding.movieGenreId.visibility = View.VISIBLE
-            return movie.show.genres[0]
+            return movie.genres[0]
         } else {
             binding.movieGenreId.visibility = View.INVISIBLE
             return " "
         }
     }
 
-    private fun loadMoviesDuration(movie: Movie): String {
-        val durationOfMovie = movie.show.runtime
+    private fun loadMoviesDuration(movie: Show): String {
+        val durationOfMovie = movie.runtime
         var displayedDuration = " "
         var minutes = 0
         var hours = 0
         if (durationOfMovie == null) {
             binding.languageDataId.visibility = View.INVISIBLE
-            return displayedDuration // or it can be set to unknown
+            return displayedDuration
         } else {
-            if (durationOfMovie % 60 == 0) {
-                hours = durationOfMovie / 60
-                minutes = durationOfMovie % 60
-                displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
-            } else {
-                hours = 0
-                minutes = durationOfMovie
-                displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
-            }
+            hours = durationOfMovie / 60
+            minutes = durationOfMovie % 60
+            displayedDuration = hours.toString() + "h" + " " + minutes.toString() + "m"
         }
         return displayedDuration
     }
 
     private fun onBackBtnPressed() {
         finish()
-    }
-
-    private fun broadcastBookmarkedIntent(movie: Movie) {
-        val bookmarkedIntent = Intent()
-//        movie.isBookmarked = !movie.isBookmarked
-        bookmarkedIntent.action = GlobalKeys.BROADCAST_ACTION
-        bookmarkedIntent.putExtra(GlobalKeys.MOVIE_DATA, movie) // send object
-        println("Broadcast message has been sent movie booked/unbooked is ${movie.show.name}, ${movie.isBookmarked}")
-        this@DetailActivity.sendBroadcast(bookmarkedIntent)
     }
 }
